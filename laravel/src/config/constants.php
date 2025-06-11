@@ -1,0 +1,10 @@
+<?php
+
+return [
+    'DEFAULT_LIMIT' => 10,
+    'FORMAT_EMAIL_EMPLOYEE' => 'vku',
+    'DEFAULT_ORDER_DATE' => 'desc',
+    'DEFAULT_USER_BORROW_LIMIT' => 10,
+    'DEFAULT_BOOK_BORROW_LIMIT' =>10,
+    'DEFAULT_BOOK_WISH_LIST_LIMIT' => 30,
+];

@@ -1,0 +1,42 @@
+.book-management-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 15px;
+    .book-management-breadcrumb-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin: 10px 0 0 0;
+        padding: 0 10px;
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    }
+    .book-management-header-container {
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px;
+        }
+    }
+    .book-button {
+        align-self: flex-start;
+    }
+    .book-management-search {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    .book-management-content {
+        width: 100%;
+    }
+    .book-management-pagination{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

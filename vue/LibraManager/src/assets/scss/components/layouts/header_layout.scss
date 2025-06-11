@@ -1,0 +1,187 @@
+.top-bar {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 20px;
+
+    .top-bar-left {
+        display: flex;
+        align-items: center;
+        .top-bar-icon_left {
+            margin-right: 20px;
+            button {
+                background-color: transparent;
+                border: none;
+            }
+            button:hover {
+                background-color: #f5f6fa;
+                cursor: pointer;
+            }
+        }
+    }
+    .search-form {
+        position: relative;
+        display: flex;
+        align-items: center;
+        svg {
+            position: absolute;
+            top: 50%;
+            z-index: 1;
+            transform: translateY(-50%);
+            right: 15px;
+            color: #202224;
+        }
+        input {
+            width: 100%;
+            height: 40px;
+            border: 1px solid #e0e0e0;
+            width: 388px;
+            height: 38px;
+            border-radius: 19px;
+            background-color: #f5f6fa;
+            letter-spacing: 0.3142857255935669px;
+            color: #202224;
+            padding: 0px 40px;
+        }
+        input:focus {
+            outline: none;
+        }
+    }
+    .user-controls {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        .btn-bell {
+            position: relative;
+        }
+        .total-notification {
+            padding: 5px 8px;
+            position: absolute;
+            top: -10px;
+            right: -15px;
+            font-size: 10px;
+            background-color: #ff4d4f;
+            color: white;
+            border-radius: 100%;
+        }
+        button {
+            background-color: transparent;
+            border: none;
+            margin-right: 20px;
+            animation: bell_animation 0.5s infinite;
+        }
+        button:hover {
+            cursor: pointer;
+        }
+        @keyframes bell_animation {
+            0% {
+                transform: rotate(10deg);
+            }
+
+            50% {
+                transform: translateY(-10deg);
+            }
+
+            100% {
+                transform: translateY(0deg);
+            }
+        }
+        .language-selector {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            color: #646464;
+            select {
+                background-color: transparent;
+                border: none;
+                outline: none;
+            }
+            select:focus {
+                outline: none;
+            }
+        }
+        .user-profile {
+            display: flex;
+            position: relative;
+            gap: 10px;
+            .user-info {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                span {
+                    font-size: 12px;
+                    line-height: 16.37px;
+                    letter-spacing: 0.2571428120136261px;
+                    color: #202224;
+                    opacity: 0.6;
+                }
+            }
+            .btn-profile-menu-icon {
+                background-color: transparent;
+                border: none;
+                .profile-menu-icon {
+                    transition: transform 0.5s ease;
+                }
+                .profile-menu-icon.rotate {
+                    transform: rotate(180deg);
+                }
+            }
+            .user-profile-popup {
+                position: absolute;
+                top: 50px;
+                right: 40px;
+                z-index: 10;
+                background-color: #ffffff;
+                width: 200px;
+                border-radius: 10px;
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+                .list-profile-options {
+                    width: 100%;
+                    height: 100%;
+                    li {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 10px 10px;
+                        border-bottom: 1px solid #f5f6fa;
+                        svg {
+                            width: 18px;
+                            height: 18px;
+                            margin-right: 10px;
+                            object-fit: contain;
+                        }
+                        a {
+                            flex: 1;
+                            font-family: "Nunito Sans", sans-serif;
+                            font-size: 14px;
+                            line-height: 19.1px;
+                            text-align: left;
+                            text-decoration: none;
+                            color: #202224;
+                        }
+                    }
+                    li:hover {
+                        background-color: #f5f6fa;
+                        cursor: pointer;
+                    }
+                    li:first-child {
+                        border-top-left-radius: 10px;
+                        border-top-right-radius: 10px;
+                    }
+                    li:last-child {
+                        border-bottom-left-radius: 10px;
+                        border-bottom-right-radius: 10px;
+                        border-bottom: none;
+                    }
+                }
+            }
+        }
+    }
+}
+svg {
+    width: 24px;
+    height: 24px;
+}

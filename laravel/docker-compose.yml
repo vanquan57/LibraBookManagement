@@ -1,0 +1,53 @@
+services:
+    web:
+        image: nginx:alpine
+        container_name: libra-book-nginx
+        ports:
+            - ${APP_NGINX_PORT}:80
+        volumes:
+            - ./src:/var/www/html
+            - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - php
+            - db
+        networks:
+            - backend
+    php:
+        ports:
+            - ${APP_PHP_PORT}:9000
+        container_name: libra-book-php
+        build:
+            dockerfile: ./docker/php/Dockerfile
+        volumes:
+            - ./src:/var/www/html
+        depends_on:
+            - db
+        networks:
+            - backend
+    mailhog:
+        image: mailhog/mailhog
+        container_name: libra-book-mailhog        
+        ports:
+            - ${MAILHOG_SMTP_PORT:-1026}:1025
+            - ${MAILHOG_WEBUI_PORT:-8026}:8025
+        restart: always        
+        networks:
+            - backend
+    db:
+        image: mysql:8.0
+        container_name: libra-book-mysql
+        ports:
+            - ${APP_MYSQL_PORT}:3306
+        volumes:
+            - mysql:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        networks:
+            - backend
+networks:
+    backend:
+        driver: bridge
+volumes:
+    mysql:
+        driver: local # the default driver

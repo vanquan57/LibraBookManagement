@@ -1,0 +1,44 @@
+.category-management-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 15px;
+    .category-management-breadcrumb-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin: 10px 0;
+        padding: 0 10px;
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    }
+    .category-management-header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        h1 {
+            margin-left: 10px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+    }
+
+    .category-button {
+        align-self: flex-start;
+    }
+    .category-management-search {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+    .category-management-content {
+        width: 100%;
+    }
+}

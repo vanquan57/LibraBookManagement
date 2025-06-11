@@ -1,0 +1,54 @@
+.search-form-container {
+    padding: 10px 10px 10px 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+    .search-form {
+        display: grid;
+        grid-template-columns: 2fr 2fr 2fr 1fr;
+        gap: 10px;
+        @media (max-width: 768px) {
+            overflow-x: scroll;
+            padding-bottom: 10px;
+        }
+        .search-button {
+            width: 100%;
+        }
+        .el-form-item {
+            @media (max-width: 768px) {
+                width: 170px;
+            }
+            margin-bottom: 0 !important;
+        }
+    }
+}
+.list-order-container {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+.status-missing {
+    color: orange;
+    font-weight: bold;
+}
+
+.status-borrowing {
+    color: blue;
+    font-weight: bold;
+}
+
+.status-overdue {
+    color: red;
+    font-weight: bold;
+}
+
+.status-returned {
+    color: green;
+    font-weight: bold;
+}
+.order-pagination{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}

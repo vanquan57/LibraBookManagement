@@ -1,0 +1,165 @@
+@import "@/assets/scss/_variables.scss";
+.register-container {
+    display: flex;
+    .register-container__wrapper {
+        display: flex;
+        justify-content: center;
+        gap: 129px;
+    }
+    .side-image {
+        width: 61%;
+        img {
+            width: 100%;
+            max-width: 805px;
+            height: 100%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+    }
+    .register-form {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        }
+        .form-control {
+            width: 371px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            .form-header {
+                color: $text-color-black;
+                h2 {
+                    font-size: 36px;
+                    font-weight: 500;
+                    line-height: 30px;
+                }
+                p {
+                    font-size: 16px;
+                    padding-top: 24px;
+                    padding-bottom: 48px;
+                }
+            }
+            .form-group {
+                border: none;
+                .form-input:first-child {
+                    margin-top: 0;
+                }
+                .form-input {
+                    width: 100%;
+                    height: 32px;
+                    border-bottom: 1.5px solid #e0e0e0;
+                    font-size: 16px;
+                }
+            }
+            .form-group-actions {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                .form-group-actions_item {
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    .btn {
+                        width: 100%;
+                    }
+                    .btn-register {
+                        background-color: $primary-color;
+                        color: $text-color-white;
+                        border: none;
+                        border-radius: 5px;
+                        height: 56px;
+                        cursor: pointer;
+                        font-weight: 500;
+                        transition: all 0.3s;
+                        font-size: 16px;
+                        &:hover {
+                            opacity: 0.9;
+                        }
+                    }
+                    .btn-register_google {
+                        margin-top: 16px;
+                        width: 100%;
+                        margin-bottom: 32px;
+                        height: 56px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        gap: 16px;
+                        background-color: transparent;
+                        border: 1px solid $border-color;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        font-size: 16px;
+                        font-weight: 400;
+                    }
+                    p{
+                        font-size: 16px;
+                    }
+                    a {
+                        color: $text-color-black;
+                        font-size: 16px;
+                        font-weight: 400;
+                        text-decoration: underline;
+                        margin-left: 16px;
+                        text-underline-offset: 4px;
+                        text-decoration-color: $border-color;
+                        &:hover {
+                            color: $primary-color;
+                        }
+                    }
+                }
+            }
+        }
+}
+@media (max-width: 768px) {
+    .register-container {
+        padding: 20px 0 40px 0;
+    }
+    .side-image {
+        display: none;
+    }
+    .form-header {
+        text-align: center;
+    }
+    .form-group {
+        margin-bottom: 40px;
+    }
+}
+@media (min-width: 1440px ) {
+    .register-container {
+        padding: 60px 0 140px 0;
+        margin: 0 auto;
+        max-width: 1440px;
+        &__wrapper {
+            width: 100%;
+            max-width: 1305px;
+            gap: 129px;
+        }
+    }
+    .form-group {
+        margin-bottom: 40px;
+    }
+}
+@media (max-width: 1281px ) {
+    .register-container {
+        padding: 60px 0 140px 0;
+        margin: 0 auto;
+        max-width: 1170px;
+        gap: 129px;
+        justify-content: center;
+    }
+    .form-group {
+        margin-bottom: 40px;
+    }
+}
+@media (max-width: 1023px) and (min-width: 769px) {
+    .register-container {
+        padding: 20px 0 40px 0;
+        margin: 0 auto;
+        gap: 29px;
+    }
+    .form-group {
+        margin-bottom: 20px;
+    }
+}

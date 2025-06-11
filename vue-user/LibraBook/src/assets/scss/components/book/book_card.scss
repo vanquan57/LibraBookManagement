@@ -1,0 +1,165 @@
+@import "@/assets/scss/_variables.scss";
+.book-card {
+    &__image {
+        width: 100%;
+        height: 250px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: $background-color-btn-carousel;
+        border-radius: 4px;
+        &:hover {
+            .book-card__image__btn-add {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 8px;
+            }
+        }
+        img {
+            width: 190px;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 4px;
+            aspect-ratio: 9/16;
+        }
+        &__action {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            cursor: pointer;
+            &__item {
+                width: 34px;
+                height: 34px;
+                border-radius: 50%;
+                background-color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.3s ease;
+                &:hover {
+                    background-color: $primary-color;
+                }
+                &.icon-wishlist {
+                    padding: 8px;
+                }
+                svg {
+                    width: 24px;
+                    height: 24px;
+                }
+                &.active {
+                    background-color: $primary-color;
+                }
+                &.disabled {
+                    cursor: not-allowed;
+                }
+                &.is-wishlist {
+                    padding: 5px;
+                }
+            }
+        }
+        &__btn-add {
+            position: absolute;
+            width: 100%;
+            height: 40px;
+            bottom: 0;
+            left: 0;
+            padding: 10px 20px;
+            background-color: #ff4500c7;
+            color: $text-color-white;
+            border-radius: 0 0 4px 4px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+        }
+    }
+    &__info {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 16px;
+        &__name {
+            font-size: clamp(16px, 1.5vw, 18px);
+            font-weight: 500;
+            color: $text-color-black;
+            line-height: 24px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+        &__author {
+            font-size: clamp(14px, 1.2vw, 16px);
+            font-weight: 400;
+            color: $text-color-black;
+            line-height: 24px;
+        }
+        &__rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            &__item {
+                svg {
+                    width: 16px;
+                    height: 16px;
+                    fill: $text-color-black;
+                    opacity: 0.25
+                }
+                &.active {
+                    svg {
+                        width: 16px;
+                        height: 16px;
+                        fill: $background-color-icon-action-hover-fill;
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+        &__total-feedbacks {
+            font-size: clamp(12px, 1vw, 14px);
+            font-weight: 600;
+            color: $text-color-black;
+            line-height: 21px;
+            opacity: 0.5;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .book-card {
+        max-width: 270px;
+        max-height: 350px;
+        &__image {
+            img {
+                width: 150px;
+                height: 190px;
+            }
+        }
+        &__info {
+            &__name {
+                max-width: 180px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
+        }
+    }
+    .sidebar-carousel {
+        grid-template-columns: 1fr;
+    }
+    .top-book__most-borrowed__list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 800px) {
+    .book-card {
+        width: 270px;
+        height: 350px;
+    }
+}

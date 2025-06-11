@@ -1,0 +1,28 @@
+.table-feedback{
+    width: 100% !important;
+    border-radius: 10px !important;
+}
+.list-feedback-container{
+    .el-table_1_column_4.is-leaf.el-table__cell{
+        .cell{
+            text-align: center;
+        }
+    }
+    .el-table_2_column_12.is-leaf.el-table__cell{
+        .cell{
+            text-align: center;
+        }
+    }
+    .el-table_1_column_5.el-table__cell{
+        .cell{
+            text-align: center;
+        }
+    }
+}
+.feedback-management-search{
+    .el-form-item__content{
+        .el-input.el-input--prefix.el-input--suffix.el-date-editor.el-date-editor--date.el-tooltip__trigger.el-tooltip__trigger{
+            width: 100%;
+        }
+    }
+}

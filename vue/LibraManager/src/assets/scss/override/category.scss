@@ -1,0 +1,36 @@
+.category-form-item{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+    .el-form-item__label-wrap{
+        margin-left:0 !important;
+    }
+    .el-form-item__content{
+        margin-left: 0 !important;
+    }
+    .category-form-item__description{
+        .el-textarea__inner{
+            height: 100px;
+        }
+    }
+    .category-form-button__submit{
+        width: 300px;
+        margin: 0 auto;
+    }
+}
+.list-category-container{
+    .el-table_1_column_3.el-table-fixed-column--left.is-last-column.is-leaf.el-table__cell{
+        .cell{
+            text-align: center;
+        }
+    }
+    .list-category-table{
+        width: 100%;
+        border-radius: 10px;
+        .el-table .cell{
+            text-align: left;
+            text-wrap: wrap;
+        }
+    }
+}

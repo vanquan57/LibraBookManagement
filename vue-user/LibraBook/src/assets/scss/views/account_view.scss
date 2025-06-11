@@ -1,0 +1,56 @@
+@import "@/assets/scss/_variables.scss";
+.account-container__right__update-info {
+    @media (min-width: 1024px) {
+        padding: 40px 80px 24px 80px;
+    }
+    &__title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        color: $primary-color;
+    }
+    &__form {
+        .el-form-item {
+            margin-bottom: 24px;
+        }
+        .el-input__wrapper {
+            height: 50px;
+        }
+        .el-select__selection {
+            height: 40px;
+        }
+    }
+    .group-button {
+        display: flex;
+        justify-content: flex-end;
+        .btn-cancel {
+            background-color: transparent;
+            border: 1px solid #ccc;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 20px;
+            height: 56px;
+            &:hover {
+                background-color: #ccc;
+                color: #fff;
+            }
+        }
+        .btn-update {
+            background-color: $primary-color;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            height: 56px;
+            width: 215px;
+            &:hover {
+                background-color: $color-red;
+            }
+        }
+    }
+}

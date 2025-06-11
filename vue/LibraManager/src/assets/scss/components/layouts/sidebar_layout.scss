@@ -1,0 +1,84 @@
+.sidebar {
+    width: 240px;
+    background-color: #fff;
+    color: #202224;
+    .sidebar-nav {
+        display: flex;
+        flex-direction: column;
+        .logo {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .logo > img {
+            width: 129px;
+            height: 40px;
+            object-fit: contain;
+        }
+        .nav-list {
+            display: flex;
+            flex-direction: column;
+            list-style-type: none;
+            justify-content: center;
+            .nav-item {
+                border-left: 2px solid transparent;
+                margin-bottom: 10px;
+                &:last-child {
+                    margin-bottom: 0;
+                }
+                a {
+                    padding: 13px 0px;
+                    margin: 0px 20px;
+                    display: flex;
+                    border-radius: 10px;
+                    align-items: center;
+                    color: #202224;
+                    text-decoration: none;
+                    svg {
+                        width: 17px;
+                        height: 17px;
+                        margin: 0px 10px;
+                    }
+                }
+            }
+            .nav-item:hover {
+                border-left: 2px solid #4880ff;
+                a {
+                    color: white;
+                    background-color: #4880ff;
+                }
+            }
+            .nav-item.highlight {
+                background-color: #007bff;
+                color: #fff;
+                border-radius: 0;
+            }
+            .nav-item.active {
+                border-left: 2px solid #4880ff;
+                a {
+                    color: white;
+                    background-color: #4880ff;
+                }
+            }
+        }
+
+        .nav-divider {
+            width: 100%;
+            border: none;
+            border-top: 1px solid #e0e0e0;
+            margin: 16px 0;
+        }
+        .nav-section-title {
+            font-size: 12px;
+            line-height: 16.37px;
+            letter-spacing: 0.2571428120136261px;
+            text-align: left;
+            color: #202224;
+            opacity: 0.6;
+            margin-left: 20px;
+        }
+    }
+}

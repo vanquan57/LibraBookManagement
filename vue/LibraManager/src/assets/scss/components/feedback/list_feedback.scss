@@ -1,0 +1,98 @@
+@import "@/assets/scss/_variables.scss";
+.list-feedback-container {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+    .actions-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+}
+.status-pending {
+    color: red;
+    font-weight: bold;
+}
+.status-approved {
+    color: green;
+    font-weight: bold;
+}
+.book-card__info__rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    &__item {
+        svg {
+            width: 16px;
+            height: 16px;
+            fill: $background-color-btn-carousel;
+        }
+        &.active {
+            svg {
+                width: 16px;
+                height: 16px;
+                fill: $background-color-icon-action-hover-fill;
+            }
+        }
+    }
+}
+.el-dialog {
+    .feedback-content {
+        margin-bottom: 24px;
+
+        .feedback-text {
+            font-size: 16px;
+            color: $text-color;
+            margin-bottom: 12px;
+
+            strong {
+                color: $primary-color;
+            }
+        }
+
+        .feedback-message {
+            position: relative;
+            background-color: $quote-bg;
+            border-left: 4px solid $primary-color;
+            margin: 0;
+            padding: 16px 20px;
+            font-style: italic;
+            border-radius: 0 4px 4px 0;
+
+            &::before {
+                content: '"';
+                font-size: 24px;
+                color: $primary-color;
+                opacity: 0.5;
+                position: absolute;
+                left: 8px;
+                top: 4px;
+            }
+        }
+    }
+
+    .book-info {
+        margin-bottom: 16px;
+
+        p {
+            font-size: 15px;
+            color: $text-color;
+
+            strong {
+                color: darken($text-color, 10%);
+            }
+        }
+    }
+    .feedback-time {
+        border-top: 1px solid $border-color;
+        padding-top: 16px;
+
+        p {
+            font-size: 14px;
+            color: lighten($text-color, 20%);
+            margin: 0;
+        }
+    }
+}

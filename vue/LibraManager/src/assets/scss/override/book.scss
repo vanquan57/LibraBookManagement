@@ -1,0 +1,19 @@
+.book-management-container {
+    .el-col.el-col-12.is-guttered {
+        .el-input.el-input--prefix.el-input--suffix.el-date-editor.el-date-editor--date.el-tooltip__trigger.el-tooltip__trigger {
+            width: 100%;
+        }
+
+        .el-input-number {
+            width: 100%;
+        }
+    
+    }
+    .el-form-item__content {
+        line-height: 12px;
+    }
+}
+.table-author{
+    width: 100% !important;
+    border-radius: 10px !important;
+}
