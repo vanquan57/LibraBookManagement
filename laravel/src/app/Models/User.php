@@ -164,7 +164,7 @@ class User extends Authenticatable implements JWTSubject, MustVerifyEmail
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification(
-            env('APP_FRONTEND_URL') . '/auth/password/reset/?token=' . $token .
+            env('APP_FRONTEND_URL') . 'auth/password/reset/?token=' . $token .
                 '&email=' . urlencode($this->email)
         ));
     }

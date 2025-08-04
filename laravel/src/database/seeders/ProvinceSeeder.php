@@ -17,380 +17,380 @@ class ProvinceSeeder extends Seeder
         
         $provinces = [
             [
+                "code" => "833",
+                "name" => "An Giang",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "144",
+                "name" => "Bắc Giang",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "835",
+                "name" => "Bắc Kạn",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "836",
+                "name" => "Bạc Liêu",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "837",
+                "name" => "Bắc Ninh",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "834",
+                "name" => "Bà Rịa - Vũng Tàu",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "838",
+                "name" => "Bến Tre",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "826",
+                "name" => "Bình Định",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "839",
+                "name" => "Bình Dương",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "840",
+                "name" => "Bình Phước",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "812",
+                "name" => "Bình Thuận",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "841",
+                "name" => "Cà Mau",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "806",
+                "name" => "Cần Thơ",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "842",
+                "name" => "Cao Bằng",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "843",
+                "name" => "Đắk Lắk",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "844",
+                "name" => "Đắk Nông",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "129",
+                "name" => "Đà Nẵng",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "845",
+                "name" => "Điện Biên",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "823",
+                "name" => "Đồng Nai",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "846",
+                "name" => "Đồng Tháp",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "847",
+                "name" => "Gia Lai",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "830",
+                "name" => "Hà Giang",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "805",
+                "name" => "Hải Dương",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "135",
+                "name" => "Hải Phòng",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
+                "code" => "807",
+                "name" => "Hà Nam",
+                'created_at' => $currentTimestamp,
+                'updated_at' => $currentTimestamp
+            ],
+            [
                 "code" => "1",
-                "name" => "Thành phố Hà Nội",
+                "name" => "Hà Nội",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "2",
-                "name" => "Tỉnh Hà Giang",
+                "code" => "848",
+                "name" => "Hà Tĩnh",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "4",
-                "name" => "Tỉnh Cao Bằng",
+                "code" => "849",
+                "name" => "Hậu Giang",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "6",
-                "name" => "Tỉnh Bắc Kạn",
+                "code" => "850",
+                "name" => "Hòa Bình",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "8",
-                "name" => "Tỉnh Tuyên Quang",
+                "code" => "816",
+                "name" => "Hưng Yên",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "10",
-                "name" => "Tỉnh Lào Cai",
+                "code" => "831",
+                "name" => "Khánh Hòa",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "11",
-                "name" => "Tỉnh Điện Biên",
+                "code" => "851",
+                "name" => "Kiên Giang",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "12",
-                "name" => "Tỉnh Lai Châu",
+                "code" => "852",
+                "name" => "Kon Tum",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "14",
-                "name" => "Tỉnh Sơn La",
+                "code" => "853",
+                "name" => "Lai Châu",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "15",
-                "name" => "Tỉnh Yên Bái",
+                "code" => "854",
+                "name" => "Lâm Đồng",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "17",
-                "name" => "Tỉnh Hoà Bình",
+                "code" => "134",
+                "name" => "Lạng Sơn",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "19",
-                "name" => "Tỉnh Thái Nguyên",
+                "code" => "808",
+                "name" => "Lào Cai",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "20",
-                "name" => "Tỉnh Lạng Sơn",
+                "code" => "855",
+                "name" => "Long An",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "22",
-                "name" => "Tỉnh Quảng Ninh",
+                "code" => "811",
+                "name" => "Nam Định",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "24",
-                "name" => "Tỉnh Bắc Giang",
+                "code" => "821",
+                "name" => "Nghệ An",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "25",
-                "name" => "Tỉnh Phú Thọ",
+                "code" => "856",
+                "name" => "Ninh Bình",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "26",
-                "name" => "Tỉnh Vĩnh Phúc",
+                "code" => "857",
+                "name" => "Ninh Thuận",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "27",
-                "name" => "Tỉnh Bắc Ninh",
+                "code" => "858",
+                "name" => "Phú Thọ",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "30",
-                "name" => "Tỉnh Hải Dương",
+                "code" => "869",
+                "name" => "Phú Yên",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "31",
-                "name" => "Thành phố Hải Phòng",
+                "code" => "818",
+                "name" => "Quảng Bình",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "33",
-                "name" => "Tỉnh Hưng Yên",
+                "code" => "859",
+                "name" => "Quảng Nam",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "34",
-                "name" => "Tỉnh Thái Bình",
+                "code" => "860",
+                "name" => "Quảng Ngãi",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "35",
-                "name" => "Tỉnh Hà Nam",
+                "code" => "819",
+                "name" => "Quảng Ninh",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "36",
-                "name" => "Tỉnh Nam Định",
+                "code" => "143",
+                "name" => "Quảng Trị",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "37",
-                "name" => "Tỉnh Ninh Bình",
+                "code" => "861",
+                "name" => "Sóc Trăng",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "38",
-                "name" => "Tỉnh Thanh Hóa",
+                "code" => "130",
+                "name" => "Sơn La",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "40",
-                "name" => "Tỉnh Nghệ An",
+                "code" => "862",
+                "name" => "Tây Ninh",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "42",
-                "name" => "Tỉnh Hà Tĩnh",
+                "code" => "863",
+                "name" => "Thái Bình",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "44",
-                "name" => "Tỉnh Quảng Bình",
+                "code" => "864",
+                "name" => "Thái Nguyên",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "45",
-                "name" => "Tỉnh Quảng Trị",
+                "code" => "865",
+                "name" => "Thanh Hóa",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "46",
-                "name" => "Tỉnh Thừa Thiên Huế",
+                "code" => "866",
+                "name" => "Thành Phố Huế",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "48",
-                "name" => "Thành phố Đà Nẵng",
+                "code" => "824",
+                "name" => "Tiền Giang",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "49",
-                "name" => "Tỉnh Quảng Nam",
+                "code" => "126",
+                "name" => "Tp Hồ Chí Minh",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "51",
-                "name" => "Tỉnh Quảng Ngãi",
+                "code" => "867",
+                "name" => "Trà Vinh",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "52",
-                "name" => "Tỉnh Bình Định",
+                "code" => "137",
+                "name" => "Tuyên Quang",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "54",
-                "name" => "Tỉnh Phú Yên",
+                "code" => "868",
+                "name" => "Vĩnh Long",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "56",
-                "name" => "Tỉnh Khánh Hòa",
+                "code" => "827",
+                "name" => "Vĩnh Phúc",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],
             [
-                "code" => "58",
-                "name" => "Tỉnh Ninh Thuận",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "60",
-                "name" => "Tỉnh Bình Thuận",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "62",
-                "name" => "Tỉnh Kon Tum",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "64",
-                "name" => "Tỉnh Gia Lai",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "66",
-                "name" => "Tỉnh Đắk Lắk",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "67",
-                "name" => "Tỉnh Đắk Nông",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "68",
-                "name" => "Tỉnh Lâm Đồng",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "70",
-                "name" => "Tỉnh Bình Phước",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "72",
-                "name" => "Tỉnh Tây Ninh",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "74",
-                "name" => "Tỉnh Bình Dương",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "75",
-                "name" => "Tỉnh Đồng Nai",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "77",
-                "name" => "Tỉnh Bà Rịa - Vũng Tàu",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "79",
-                "name" => "Thành phố Hồ Chí Minh",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "80",
-                "name" => "Tỉnh Long An",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "82",
-                "name" => "Tỉnh Tiền Giang",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "83",
-                "name" => "Tỉnh Bến Tre",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "84",
-                "name" => "Tỉnh Trà Vinh",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "86",
-                "name" => "Tỉnh Vĩnh Long",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "87",
-                "name" => "Tỉnh Đồng Tháp",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "89",
-                "name" => "Tỉnh An Giang",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "91",
-                "name" => "Tỉnh Kiên Giang",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "92",
-                "name" => "Thành phố Cần Thơ",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "93",
-                "name" => "Tỉnh Hậu Giang",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "94",
-                "name" => "Tỉnh Sóc Trăng",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "95",
-                "name" => "Tỉnh Bạc Liêu",
-                'created_at' => $currentTimestamp,
-                'updated_at' => $currentTimestamp
-            ],
-            [
-                "code" => "96",
-                "name" => "Tỉnh Cà Mau",
+                "code" => "132",
+                "name" => "Yên Bái",
                 'created_at' => $currentTimestamp,
                 'updated_at' => $currentTimestamp
             ],

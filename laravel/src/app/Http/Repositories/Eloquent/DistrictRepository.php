@@ -30,4 +30,16 @@ class DistrictRepository extends BaseRepository implements DistrictRepositoryInt
     {
         return $province->districts;
     }
+
+    /**
+     * Find district by code
+     *
+     * @param string $code
+     *
+     * @return District|null
+     */
+    public function findByCode(string $code): ?District
+    {
+        return $this->model->where('code', $code)->first();
+    }
 }

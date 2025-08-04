@@ -42,8 +42,8 @@ Route::group(['prefix' => 'v1'], function () {
             Route::put('/cart', [CartController::class, 'update']);
             Route::delete('/cart/{bookId}', [CartController::class, 'destroy']);
             Route::get('/provinces', [LocationController::class, 'getAllProvinces']);
-            Route::get('/districts/{provinceId}', [LocationController::class, 'getDistrictsByProvinceId']);
-            Route::get('/wards/{districtId}', [LocationController::class, 'getWardsByDistrictId']);
+            Route::get('/districts/{provinceCode}', [LocationController::class, 'getDistrictsByProvinceCode']);
+            Route::get('/wards/{districtCode}', [LocationController::class, 'getWardsByDistrictCode']);
             Route::get('/order', [OrderController::class, 'index']);
             Route::get('/order/{id}', [OrderController::class, 'show']);
             Route::post('/order', [OrderController::class, 'store']);

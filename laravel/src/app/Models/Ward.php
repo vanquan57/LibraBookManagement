@@ -20,7 +20,7 @@ class Ward extends Model
      */
     public function district()
     {
-        return $this->belongsTo(District::class, 'district_code');
+        return $this->belongsTo(District::class, 'district_code', 'code');
     }
 
     /**

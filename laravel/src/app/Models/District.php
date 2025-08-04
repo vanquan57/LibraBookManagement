@@ -25,7 +25,7 @@ class District extends Model
      */
     public function province()
     {
-        return $this->belongsTo(Province::class, 'province_code');
+        return $this->belongsTo(Province::class, 'province_code', 'code');
     }
 
     /**
@@ -33,7 +33,7 @@ class District extends Model
      */
     public function wards()
     {
-        return $this->hasMany(Ward::class, 'district_code');
+        return $this->hasMany(Ward::class, 'district_code', 'code');
     }
 
     /**

@@ -42,17 +42,17 @@ class LocationService
     }
 
     /**
-     * Get all districts by province id
+     * Get all districts by province code
      *
-     * @param int $provinceId
+     * @param int $provinceCode
      *
      * @return Collection|null
      */
-    public function getDistrictsByProvinceId(int $provinceId): ?Collection
+    public function getDistrictsByProvinceCode(int $provinceCode): ?Collection
     {
         try {
-            $province = $this->provinceRepository->find($provinceId);
-
+            $province = $this->provinceRepository->findByCode($provinceCode);
+            Log::info($province);
             if(!$province) {
                 return null;
             }
@@ -66,16 +66,16 @@ class LocationService
     }
 
     /**
-     * Get all wards by district id
+     * Get all wards by district code
      *
-     * @param int $districtId
+     * @param string $districtCode
      *
      * @return Collection|null
      */
-    public function getWardsByDistrictId(int $districtId): ?Collection
+    public function getWardsByDistrictCode(string $districtCode): ?Collection
     {
         try {
-            $district = $this->districtRepository->find($districtId);
+            $district = $this->districtRepository->findByCode($districtCode);
 
             if (!$district) {
                 return null;
