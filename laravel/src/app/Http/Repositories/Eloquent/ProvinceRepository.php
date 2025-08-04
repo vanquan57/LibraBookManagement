@@ -17,4 +17,15 @@ class ProvinceRepository extends BaseRepository implements ProvinceRepositoryInt
     {
         return Province::class;
     }
+
+    /**
+     * Find province by code
+     *
+     * @param string $code
+     * @return Province|null
+     */
+    public function findByCode(string $code): ?Province
+    {
+        return $this->model->where('code', $code)->first();
+    }
 }

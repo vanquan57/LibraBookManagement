@@ -2,4 +2,15 @@
 
 namespace App\Http\Repositories;
 
-interface ProvinceRepositoryInterface extends BaseRepositoryInterface {}
+use App\Models\Province;
+
+interface ProvinceRepositoryInterface extends BaseRepositoryInterface {
+
+    /**
+     * Find province by code
+     *
+     * @param string $code
+     * @return \App\Models\Province|null
+     */
+    public function findByCode(string $code): ?Province;
+}

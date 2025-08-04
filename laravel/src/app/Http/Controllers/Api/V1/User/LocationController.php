@@ -38,15 +38,15 @@ class LocationController extends Controller
     }
 
     /**
-     * Get all districts by province id
+     * Get all districts by province code
      *
-     * @param int $provinceId
+     * @param string $provinceCode
      *
      * @return JsonResponse
      */
-    public function getDistrictsByProvinceId(int $provinceId): JsonResponse
+    public function getDistrictsByProvinceCode(string $provinceCode): JsonResponse
     {
-        if (!$districts = $this->locationService->getDistrictsByProvinceId($provinceId)) {
+        if (!$districts = $this->locationService->getDistrictsByProvinceCode($provinceCode)) {
             return responseErrorAPI(
                 Response::HTTP_BAD_REQUEST,
                 Response::HTTP_BAD_REQUEST,
@@ -58,15 +58,15 @@ class LocationController extends Controller
     }
 
     /**
-     * Get all wards by district id
+     * Get all wards by district code
      *
-     * @param int $districtId
+     * @param string $districtCode
      *
      * @return JsonResponse
      */
-    public function getWardsByDistrictId(int $districtId): JsonResponse
+    public function getWardsByDistrictCode(string $districtCode): JsonResponse
     {
-        if (!$wards = $this->locationService->getWardsByDistrictId($districtId)) {
+        if (!$wards = $this->locationService->getWardsByDistrictCode($districtCode)) {
             return responseErrorAPI(
                 Response::HTTP_BAD_REQUEST,
                 Response::HTTP_BAD_REQUEST,
