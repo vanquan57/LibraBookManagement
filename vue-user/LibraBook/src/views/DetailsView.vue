@@ -337,6 +337,7 @@ const urlImage = (url) => {
  */
 onMounted(async () => {
     await getBook(slug);
+    await updateBookViewCount(slug);
     await getFeedbacks();
     await getListBookSameCategory();
     await getWishList();
@@ -723,6 +724,21 @@ const toggleWishlist = async (bookId) => {
         await handleAddBookToWishlist(bookId);
     }
 };
+
+/**
+ * The method handle update book view count
+ *
+ * @param {string} slug - The slug is book id
+ *
+ * @returns {Promise<void>}
+ */
+const updateBookViewCount = async (slug) => {
+    try {
+        const response = await axiosInstance.put(`/book/${slug}`, {
+            id: slug
+        });
+    } catch (error) {}
+}
 </script>
 
 <style lang="scss" scoped>
