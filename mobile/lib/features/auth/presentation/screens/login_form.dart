@@ -1,11 +1,9 @@
+// lib/features/auth/presentation/screens/login_form.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/core/config/constant.dart';
-import 'package:mobile/core/config/env.dart';
-import 'package:mobile/core/logger/logger.dart';
 import 'package:mobile/features/auth/presentation/provider/login_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -20,9 +18,6 @@ class _LoginFormState extends State<LoginForm> {
   final passwordController = TextEditingController();
 
   bool _obscurePassword = true;
-  String? errorMessage;
-  String? errorMessageLoginGoogle;
-  bool isShowDialog = false;
 
   void _submit() {
     if (_formKey.currentState!.validate()) {
@@ -54,7 +49,7 @@ class _LoginFormState extends State<LoginForm> {
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               hintText: 'contact@dscode.com',
-              hintStyle: TextStyle(color: Colors.black54),
+              hintStyle: const TextStyle(color: Colors.black54),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.r),
               ),
@@ -65,7 +60,6 @@ class _LoginFormState extends State<LoginForm> {
               } else if (!value.endsWith(AppConstants.EMAIL_VKU)) {
                 return 'Địa chỉ email không hợp lệ';
               }
-
               return null;
             },
           ),
@@ -80,25 +74,15 @@ class _LoginFormState extends State<LoginForm> {
           TextFormField(
             controller: passwordController,
             obscureText: _obscurePassword,
-            style: TextStyle(color: Colors.black54),
             decoration: InputDecoration(
               suffixIcon: IconButton(
                 icon: Icon(
                   _obscurePassword ? Icons.visibility_off : Icons.visibility,
                 ),
-                onPressed: () {
-                  setState(() {
-                    _obscurePassword = !_obscurePassword;
-                  });
-                },
+                onPressed: () =>
+                    setState(() => _obscurePassword = !_obscurePassword),
               ),
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12.r),
-                borderSide: errorMessage != null
-                    ? const BorderSide(color: Colors.red)
-                    : BorderSide(color: Colors.grey.shade400),
-              ),
-              enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.r),
                 borderSide: errorMessage != null
                     ? const BorderSide(color: Colors.red)
@@ -114,13 +98,15 @@ class _LoginFormState extends State<LoginForm> {
 
           SizedBox(height: 8.h),
 
+          // Error message & Forgot password
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                errorMessage ?? '',
-                style: TextStyle(color: Colors.red, fontSize: 12.sp),
-              ),
+              if (errorMessage != null)
+                Text(
+                  errorMessage,
+                  style: TextStyle(color: Colors.red, fontSize: 12.sp),
+                ),
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
@@ -136,14 +122,16 @@ class _LoginFormState extends State<LoginForm> {
 
           SizedBox(height: 20.h),
 
-          // Continue button
+          // Login button
           SizedBox(
             width: double.infinity,
             height: 50.h,
             child: ElevatedButton(
-              onPressed: loginProvider.isLoading ? null : _submit,
+              onPressed: loginProvider.isLoading
+                  ? null
+                  : _submit, // Disable when loading
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFFF6411A),
+                backgroundColor: const Color(0xFFF6411A),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.r),
                 ),
@@ -153,7 +141,7 @@ class _LoginFormState extends State<LoginForm> {
                       height: 24.h,
                       width: 24.h,
                       child: const CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                        valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFF6411A)),
                         strokeWidth: 2,
                       ),
                     )
@@ -163,7 +151,10 @@ class _LoginFormState extends State<LoginForm> {
                     ),
             ),
           ),
+
           SizedBox(height: 30.h),
+
+          // Divider
           Row(
             children: [
               Expanded(child: Divider(thickness: 1, color: Colors.grey[400])),
@@ -177,16 +168,19 @@ class _LoginFormState extends State<LoginForm> {
               Expanded(child: Divider(thickness: 1, color: Colors.grey[400])),
             ],
           ),
+
           SizedBox(height: 30.h),
 
+          // Google Sign In
           SizedBox(
             width: double.infinity,
             height: 50.h,
             child: ElevatedButton(
               onPressed: () async {
-                await loginProvider.loginGoogle();
+                await loginProvider.loginGoogle(); // Call loginGoogle
 
-                if (loginProvider.isShowDialog && loginProvider.errorMessageLoginGoogle != null) {
+                if (loginProvider.isShowDialog &&
+                    loginProvider.errorMessageLoginGoogle != null) {
                   showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
@@ -210,7 +204,7 @@ class _LoginFormState extends State<LoginForm> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.r),
                 ),
-                side: BorderSide(color: Colors.black54, width: 1),
+                side: const BorderSide(color: Colors.black54, width: 1),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -232,5 +226,12 @@ class _LoginFormState extends State<LoginForm> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 }

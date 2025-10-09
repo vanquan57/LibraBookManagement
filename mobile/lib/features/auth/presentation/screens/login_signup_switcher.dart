@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mobile/core/di/injection.dart';
+import 'package:mobile/features/auth/presentation/provider/login_provider.dart';
+import 'package:mobile/features/auth/presentation/screens/login_form.dart';
+import 'package:provider/provider.dart';
 
 class LoginSignupSwitcher extends StatefulWidget {
   const LoginSignupSwitcher({super.key});
@@ -14,25 +18,48 @@ class _LoginSignupSwitcherState extends State<LoginSignupSwitcher> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _buildTab(
-          title: 'Đăng nhập',
-          selected: isLogin,
-          onTap: () {
-            setState(() => isLogin = true);
-          },
+    return ChangeNotifierProvider(
+      create: (_) => getIt<LoginProvider>(),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SafeArea(
+          child: Column(
+            children: [
+              SizedBox(height: 32.h),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildTab(
+                    title: 'Đăng nhập',
+                    selected: isLogin,
+                    onTap: () {
+                      setState(() => isLogin = true);
+                    },
+                  ),
+                  SizedBox(width: 40.w),
+                  _buildTab(
+                    title: 'Đăng ký',
+                    selected: !isLogin,
+                    onTap: () {
+                      setState(() => isLogin = false);
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 32.h),
+              Expanded(
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: const LoginForm(),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
-        SizedBox(width: 40.w),
-        _buildTab(
-          title: 'Đăng ký',
-          selected: !isLogin,
-          onTap: () {
-            setState(() => isLogin = false);
-          },
-        ),
-      ],
+      ),
     );
   }
 }

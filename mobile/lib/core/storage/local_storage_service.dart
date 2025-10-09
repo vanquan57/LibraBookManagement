@@ -1,26 +1,33 @@
+// lib/core/storage/local_storage_service.dart
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:injectable/injectable.dart';
 
+@lazySingleton
 class LocalStorageService {
-  static SharedPreferences? _preferences;
+  final SharedPreferences _preferences;
+  
+  // SYNC constructor injection
+  LocalStorageService(this._preferences);
 
-  static Future<void> init() async {
-    _preferences = await SharedPreferences.getInstance();
-  }
-
-  static const _accessTokenKey = 'accessToken';
-
-  // The function to save access token
+  // Save access token
   Future<void> saveAccessToken(String token) async {
-    await _preferences?.setString(_accessTokenKey, token);
+    await _preferences.setString('access_token', token);
   }
 
-  // The function to retrieve access token
+  // Get access token
   Future<String?> getAccessToken() async {
-    return _preferences?.getString(_accessTokenKey);
+    return _preferences.getString('access_token');
   }
 
-  // The function to delete all tokens (when the user logs out)
-  Future<void> deleteAllTokens() async {
-    await _preferences?.remove(_accessTokenKey);
+  // Clear all data
+  Future<void> clear() async {
+    await _preferences.clear();
   }
+}
+
+@module
+abstract class LocalStorageModule {
+  @preResolve
+  @lazySingleton
+  Future<SharedPreferences> get prefs => SharedPreferences.getInstance();
 }
