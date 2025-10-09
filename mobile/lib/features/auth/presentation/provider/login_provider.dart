@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:injectable/injectable.dart';
 import 'package:mobile/core/config/env.dart';
 import 'package:mobile/core/logger/logger.dart';
 import 'package:mobile/core/storage/local_storage_service.dart';
@@ -7,11 +8,13 @@ import 'package:mobile/features/auth/domain/usecases/post_login.dart';
 import 'package:mobile/features/auth/data/models/token_data.dart';
 import 'package:mobile/features/auth/domain/usecases/post_login_google.dart';
 
+@injectable 
 class LoginProvider extends ChangeNotifier {
   final PostLoginUseCase postLoginUseCase;
   final PostLoginGoogleUseCase postLoginGoogleUseCase;
   final LocalStorageService localStorageService;
 
+  // SYNC constructor
   LoginProvider({
     required this.postLoginUseCase,
     required this.postLoginGoogleUseCase,

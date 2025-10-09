@@ -1,37 +1,25 @@
-import 'package:mobile/core/logger/logger.dart';
+// lib/features/auth/data/repositories/auth_repository_impl.dart
+import 'package:injectable/injectable.dart';
 import 'package:mobile/core/response/api_response.dart';
 
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_remote_datasource.dart';
 import '../models/token_data.dart';
 
+@LazySingleton(as: AuthRepository)
 class AuthRepositoryImpl implements AuthRepository {
   final AuthRemoteDataSource remoteDataSource;
 
-  AuthRepositoryImpl({required this.remoteDataSource});
+  // SYNC constructor
+  AuthRepositoryImpl(this.remoteDataSource);
 
-  /// Login with email and password
-  /// 
-  /// @param String email
-  /// @param String password
-  ///
-  /// @return Future<ApiResponse<TokenData>>
   @override
   Future<ApiResponse<TokenData>> login(String email, String password) async {
-    final apiResponse = await remoteDataSource.login(email, password);
-
-    return apiResponse;
+    return await remoteDataSource.login(email, password);
   }
 
-  /// Login with Google account
-  /// 
-  /// @param String accessToken
-  ///
-  /// @return Future<ApiResponse<TokenData>>
   @override
   Future<ApiResponse<TokenData>> loginWithGoogle(String accessToken) async {
-    final apiResponse = await remoteDataSource.loginWithGoogle(accessToken);
-
-    return apiResponse;
+    return await remoteDataSource.loginWithGoogle(accessToken);
   }
 }
