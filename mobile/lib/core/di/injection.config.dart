@@ -20,7 +20,12 @@ import '../../features/auth/data/repositories/auth_repository_impl.dart'
 import '../../features/auth/domain/repositories/auth_repository.dart' as _i787;
 import '../../features/auth/domain/usecases/post_login.dart' as _i892;
 import '../../features/auth/domain/usecases/post_login_google.dart' as _i332;
+import '../../features/auth/domain/usecases/post_register.dart' as _i166;
+import '../../features/auth/domain/usecases/post_register_google.dart'
+    as _i1046;
 import '../../features/auth/presentation/provider/login_provider.dart' as _i987;
+import '../../features/auth/presentation/provider/register_provider.dart'
+    as _i1046;
 import '../network/dio_client.dart' as _i667;
 import '../storage/local_storage_service.dart' as _i744;
 
@@ -55,9 +60,18 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i892.PostLoginUseCase(gh<_i787.AuthRepository>()));
     gh.lazySingleton<_i332.PostLoginGoogleUseCase>(
         () => _i332.PostLoginGoogleUseCase(gh<_i787.AuthRepository>()));
+    gh.lazySingleton<_i166.PostRegisterUseCase>(
+        () => _i166.PostRegisterUseCase(gh<_i787.AuthRepository>()));
+    gh.lazySingleton<_i1046.PostRegisterGoogleUseCase>(
+        () => _i1046.PostRegisterGoogleUseCase(gh<_i787.AuthRepository>()));
     gh.factory<_i987.LoginProvider>(() => _i987.LoginProvider(
           postLoginUseCase: gh<_i892.PostLoginUseCase>(),
           postLoginGoogleUseCase: gh<_i332.PostLoginGoogleUseCase>(),
+          localStorageService: gh<_i744.LocalStorageService>(),
+        ));
+    gh.factory<_i1046.RegisterProvider>(() => _i1046.RegisterProvider(
+          postRegisterUseCase: gh<_i166.PostRegisterUseCase>(),
+          postRegisterGoogleUseCase: gh<_i1046.PostRegisterGoogleUseCase>(),
           localStorageService: gh<_i744.LocalStorageService>(),
         ));
     return this;

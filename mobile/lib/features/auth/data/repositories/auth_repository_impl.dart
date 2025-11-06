@@ -22,4 +22,26 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<ApiResponse<TokenData>> loginWithGoogle(String accessToken) async {
     return await remoteDataSource.loginWithGoogle(accessToken);
   }
+
+  @override
+  Future<ApiResponse<String>> register({
+    required String code,
+    required String name,
+    required String email,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    return await remoteDataSource.register(
+      code: code,
+      name: name,
+      email: email,
+      password: password,
+      confirmPassword: confirmPassword,
+    );
+  }
+
+  @override
+  Future<ApiResponse<TokenData>> registerWithGoogle(String accessToken, String code) async {
+    return await remoteDataSource.registerWithGoogle(accessToken, code);
+  }
 }

@@ -4,6 +4,7 @@ import 'injection.config.dart';
 
 final getIt = GetIt.instance;
 
+// flutter pub run build_runner build --delete-conflicting-outputs
 @InjectableInit(
   initializerName: 'init',
   preferRelativeImports: true,
