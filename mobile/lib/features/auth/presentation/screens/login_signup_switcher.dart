@@ -1,9 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/core/di/injection.dart';
 import 'package:mobile/features/auth/presentation/provider/login_provider.dart';
+import 'package:mobile/features/auth/presentation/provider/register_provider.dart';
 import 'package:mobile/features/auth/presentation/screens/login_form.dart';
+import 'package:mobile/features/auth/presentation/screens/register_form.dart';
 import 'package:provider/provider.dart';
 
 class LoginSignupSwitcher extends StatefulWidget {
@@ -18,8 +19,11 @@ class _LoginSignupSwitcherState extends State<LoginSignupSwitcher> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => getIt<LoginProvider>(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => getIt<LoginProvider>()),
+        ChangeNotifierProvider(create: (_) => getIt<RegisterProvider>()),
+      ],
       child: Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
@@ -46,13 +50,20 @@ class _LoginSignupSwitcherState extends State<LoginSignupSwitcher> {
                   ),
                 ],
               ),
-              SizedBox(height: 32.h),
               Expanded(
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 300),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: const LoginForm(),
+                  child: Align(
+                    key: ValueKey<bool>(isLogin),
+                    alignment: Alignment.topCenter,
+                    child: SingleChildScrollView(
+                      padding: EdgeInsets.only(
+                        left: 16.w,
+                        right: 16.w,
+                        top: 32.h,
+                      ),
+                      child: isLogin ? const LoginForm() : const RegisterForm(),
+                    ),
                   ),
                 ),
               ),

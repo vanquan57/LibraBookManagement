@@ -69,4 +69,79 @@ class AuthRemoteDataSource {
       );
     }
   }
+
+  /// Register with name, code, email, password and confirm password
+  ///
+  /// @param String name
+  /// @param String code
+  /// @param String email
+  /// @param String password
+  /// @param String confirmPassword
+  /// 
+  /// @return Future<ApiResponse<String>>
+  Future<ApiResponse<String>> register({
+    required String name,
+    required String code,
+    required String email,
+    required String password,
+    required String confirmPassword,
+  }) async {
+    try {
+      final response = await _dio.post(
+        '/auth/register',
+        data: {
+          'name': name,
+          'code': code,
+          'email': email,
+          'password': password,
+          'confirm_password': confirmPassword,
+        },
+      );
+
+      return ApiResponse.fromJson(
+        response.data,
+        (json) => json['message'] as String,
+      );
+    } on DioException catch (e) {
+      log.e('Register failed: ${getErrorMessage(e)}');
+
+      return ApiResponse.failure(getErrorMessage(e));
+    } catch (e) {
+      log.e('Register failed: $e');
+
+      return ApiResponse.failure(
+        'Đã có lỗi không mong muốn xảy ra. Vui lòng thử lại sau.',
+      );
+    }
+  }
+
+  /// Register with Google account
+  ///
+  /// @param String accessToken
+  /// @param String code
+  ///
+  /// @return Future<ApiResponse<TokenData>>
+  Future<ApiResponse<TokenData>> registerWithGoogle(String accessToken, String code) async {
+    try {
+      final response = await _dio.post(
+        '/auth/google/callback/register',
+        data: {'access_token': accessToken, 'code': code},
+      );
+
+      return ApiResponse.fromJson(
+        response.data,
+        (json) => TokenData.fromJson(json),
+      );
+    } on DioException catch (e) {
+      log.e('Login google failed: ${getErrorMessage(e)}');
+
+      return ApiResponse.failure(getErrorMessage(e));
+    } catch (e) {
+      log.e('Login google failed: $e');
+
+      return ApiResponse.failure(
+        'Đã có lỗi không mong muốn xảy ra. Vui lòng thử lại sau.',
+      );
+    }
+  }
 }
