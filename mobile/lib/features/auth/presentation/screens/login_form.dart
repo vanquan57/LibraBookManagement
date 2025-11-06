@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/core/config/constant.dart';
+import 'package:mobile/core/utils/validators.dart';
+import 'package:mobile/core/widgets/styled_dialog.dart';
 import 'package:mobile/features/auth/presentation/provider/login_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -16,15 +18,45 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final FocusNode emailFocusNode = FocusNode();
+  final FocusNode passwordFocusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    final loginProvider = context.read<LoginProvider>();
+
+    emailFocusNode.addListener(() {
+      if (emailFocusNode.hasFocus) {
+        loginProvider.resetErrorMessages();
+      }
+    });
+
+    passwordFocusNode.addListener(() {
+      if (passwordFocusNode.hasFocus) {
+        loginProvider.resetErrorMessages();
+      }
+    });
+  }
 
   bool _obscurePassword = true;
 
-  void _submit() {
+  void _submit() async {
+    final loginProvider = context.read<LoginProvider>();
     if (_formKey.currentState!.validate()) {
-      context.read<LoginProvider>().login(
+      final result = await loginProvider.login(
         emailController.text,
         passwordController.text,
       );
+
+      if (!mounted) return;
+
+      if (result) {
+        _formKey.currentState!.reset();
+        emailController.clear();
+        passwordController.clear();
+      }
     }
   }
 
@@ -46,6 +78,8 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(height: 8.h),
           TextFormField(
             controller: emailController,
+            focusNode: emailFocusNode,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               hintText: 'contact@dscode.com',
@@ -54,14 +88,7 @@ class _LoginFormState extends State<LoginForm> {
                 borderRadius: BorderRadius.circular(12.r),
               ),
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty) {
-                return 'Vui lòng nhập email';
-              } else if (!value.endsWith(AppConstants.EMAIL_VKU)) {
-                return 'Địa chỉ email không hợp lệ';
-              }
-              return null;
-            },
+            validator: (value) => Validators.email(value),
           ),
           SizedBox(height: 20.h),
 
@@ -73,6 +100,8 @@ class _LoginFormState extends State<LoginForm> {
           SizedBox(height: 8.h),
           TextFormField(
             controller: passwordController,
+            focusNode: passwordFocusNode,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             obscureText: _obscurePassword,
             decoration: InputDecoration(
               suffixIcon: IconButton(
@@ -89,11 +118,7 @@ class _LoginFormState extends State<LoginForm> {
                     : BorderSide(color: Colors.grey.shade400),
               ),
             ),
-            validator: (value) {
-              if (value == null || value.isEmpty)
-                return 'Vui lòng nhập mật khẩu';
-              return null;
-            },
+            validator: (value) => Validators.password(value),
           ),
 
           SizedBox(height: 8.h),
@@ -141,7 +166,9 @@ class _LoginFormState extends State<LoginForm> {
                       height: 24.h,
                       width: 24.h,
                       child: const CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFF6411A)),
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Color(0xFFF6411A),
+                        ),
                         strokeWidth: 2,
                       ),
                     )
@@ -183,18 +210,10 @@ class _LoginFormState extends State<LoginForm> {
                     loginProvider.errorMessageLoginGoogle != null) {
                   showDialog(
                     context: context,
-                    builder: (ctx) => AlertDialog(
-                      title: const Text('Lỗi'),
-                      content: Text(loginProvider.errorMessageLoginGoogle!),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(ctx).pop();
-                            loginProvider.resetDialogState();
-                          },
-                          child: const Text('Đóng'),
-                        ),
-                      ],
+                    barrierDismissible: true,
+                    builder: (context) => StyledDialog(
+                      message: loginProvider.errorMessageLoginGoogle!,
+                      isSuccess: false,
                     ),
                   );
                 }
@@ -232,6 +251,8 @@ class _LoginFormState extends State<LoginForm> {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
+    emailFocusNode.dispose();
+    passwordFocusNode.dispose();
     super.dispose();
   }
 }
