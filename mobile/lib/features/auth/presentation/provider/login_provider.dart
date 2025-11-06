@@ -39,8 +39,8 @@ class LoginProvider extends ChangeNotifier {
   /// @param String email
   /// @param String password
   ///
-  /// @return Future<void>
-  Future<void> login(String email, String password) async {
+  /// @return Future<bool>
+  Future<bool> login(String email, String password) async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
@@ -54,6 +54,10 @@ class LoginProvider extends ChangeNotifier {
 
       // Save token data to local storage
       await localStorageService.saveAccessToken(_tokenData!.accessToken);
+      _isLoading = false;
+      notifyListeners();
+
+      return true;
     } else {
       if (response.errors is Map) {
         _errorMessage = response.errors['error_message']?.toString();
@@ -64,17 +68,23 @@ class LoginProvider extends ChangeNotifier {
 
     _isLoading = false;
     notifyListeners();
+
+    return false;
   }
 
   /// Login with Google account
   ///
   /// @return Future<void>
   Future<void> loginGoogle() async {
-    final googleUser = await GoogleSignIn(
-      clientId: Env.googleClientId, // Web Client ID
+    final googleSignIn = GoogleSignIn(
+      clientId: Env.googleClientId,
       scopes: ['email', 'profile'],
-    ).signIn();
+    );
 
+    await googleSignIn.signOut();
+
+    final googleUser = await googleSignIn.signIn();
+    
     if (googleUser == null) {
       debugPrint("Người dùng hủy đăng nhập Google");
       return;
@@ -107,9 +117,8 @@ class LoginProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void resetDialogState() {
-    _isShowDialog = false;
-    _errorMessageLoginGoogle = null;
+  void resetErrorMessages() {
+    _errorMessage = null;
     notifyListeners();
   }
 }
