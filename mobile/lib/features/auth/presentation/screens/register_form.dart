@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/core/utils/validators.dart';
-import 'package:mobile/core/widgets/styled_dialog.dart';
+import 'package:mobile/share/components/styled_dialog.dart';
 import 'package:mobile/features/auth/presentation/provider/register_provider.dart';
 import 'package:provider/provider.dart';
 
