@@ -1,15 +1,21 @@
 // lib/core/router/app_router.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mobile/core/di/injection.dart';
+import 'package:mobile/features/home/presentation/provider/home_provider.dart';
+import 'package:mobile/share/components/layouts/main_layout.dart';
 import 'package:mobile/features/auth/presentation/screens/login_signup_switcher.dart';
+import 'package:mobile/features/home/presentation/screens/home.dart';
+import 'package:provider/provider.dart';
 
 class AppRouter {
   static const String splash = '/';
   static const String auth = '/auth';
+  static const String home = '/home';
 
   // GoRouter configuration
   static final GoRouter router = GoRouter(
-    initialLocation: auth, // ✅ Screen default
+    initialLocation: home, // ✅ Screen default
     debugLogDiagnostics: true, // Debug mode
 
     redirect: (BuildContext context, GoRouterState state) {
@@ -27,6 +33,17 @@ class AppRouter {
         path: auth,
         name: 'auth',
         builder: (context, state) => const LoginSignupSwitcher(),
+      ),
+      // Home route
+      GoRoute(
+        path: home,
+        name: 'home',
+        builder: (context, state) {
+          return ChangeNotifierProvider<HomeProvider>(
+            create: (_) => getIt<HomeProvider>(),
+            child: MainLayout(child: const HomePage()),
+          );
+        },
       ),
     ],
 

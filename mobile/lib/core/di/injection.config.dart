@@ -26,6 +26,22 @@ import '../../features/auth/domain/usecases/post_register_google.dart'
 import '../../features/auth/presentation/provider/login_provider.dart' as _i987;
 import '../../features/auth/presentation/provider/register_provider.dart'
     as _i1046;
+import '../../features/home/data/datasources/book/book_remote_datasource.dart'
+    as _i851;
+import '../../features/home/data/datasources/category/category_remote_datasource.dart'
+    as _i590;
+import '../../features/home/data/repositories/book/book_repository_impl.dart'
+    as _i297;
+import '../../features/home/data/repositories/category/category_repository_impl.dart'
+    as _i392;
+import '../../features/home/domain/repositories/book/book_repository.dart'
+    as _i772;
+import '../../features/home/domain/repositories/category/category_repository.dart'
+    as _i441;
+import '../../features/home/domain/usecase/book/get_books.dart' as _i721;
+import '../../features/home/domain/usecase/category/get_list_category.dart'
+    as _i258;
+import '../../features/home/presentation/provider/home_provider.dart' as _i376;
 import '../network/dio_client.dart' as _i667;
 import '../storage/local_storage_service.dart' as _i744;
 
@@ -54,8 +70,20 @@ extension GetItInjectableX on _i174.GetIt {
         () => dioModule.provideDio(gh<_i667.DioClient>()));
     gh.lazySingleton<_i161.AuthRemoteDataSource>(
         () => _i161.AuthRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i851.BookRemoteDataSource>(
+        () => _i851.BookRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i590.CategoryRemoteDataSource>(
+        () => _i590.CategoryRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i441.CategoryRepository>(() =>
+        _i392.CategoryRepositoryImpl(gh<_i590.CategoryRemoteDataSource>()));
     gh.lazySingleton<_i787.AuthRepository>(
         () => _i153.AuthRepositoryImpl(gh<_i161.AuthRemoteDataSource>()));
+    gh.lazySingleton<_i772.BookRepository>(
+        () => _i297.BookRepositoryImpl(gh<_i851.BookRemoteDataSource>()));
+    gh.lazySingleton<_i258.GetListCategoriesUseCase>(
+        () => _i258.GetListCategoriesUseCase(gh<_i441.CategoryRepository>()));
+    gh.lazySingleton<_i721.GetBooksUseCase>(
+        () => _i721.GetBooksUseCase(gh<_i772.BookRepository>()));
     gh.lazySingleton<_i892.PostLoginUseCase>(
         () => _i892.PostLoginUseCase(gh<_i787.AuthRepository>()));
     gh.lazySingleton<_i332.PostLoginGoogleUseCase>(
@@ -64,6 +92,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i166.PostRegisterUseCase(gh<_i787.AuthRepository>()));
     gh.lazySingleton<_i1046.PostRegisterGoogleUseCase>(
         () => _i1046.PostRegisterGoogleUseCase(gh<_i787.AuthRepository>()));
+    gh.factory<_i376.HomeProvider>(() => _i376.HomeProvider(
+          getBooksUseCase: gh<_i721.GetBooksUseCase>(),
+          getListCategoriesUseCase: gh<_i258.GetListCategoriesUseCase>(),
+        ));
     gh.factory<_i987.LoginProvider>(() => _i987.LoginProvider(
           postLoginUseCase: gh<_i892.PostLoginUseCase>(),
           postLoginGoogleUseCase: gh<_i332.PostLoginGoogleUseCase>(),
