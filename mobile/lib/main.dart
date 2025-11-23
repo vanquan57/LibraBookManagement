@@ -3,6 +3,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/core/di/injection.dart';
 import 'package:mobile/core/router/app_router.dart';
+import 'package:mobile/features/wishlist/presentation/provider/wishlist_provider.dart';
+import 'package:mobile/share/provider/global/check_login_provider.dart';
+import 'package:provider/provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,12 +20,20 @@ Future<void> main() async {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp.router(
-          routerConfig: AppRouter.router, // ✅ Using GoRouter
-          theme: ThemeData.dark().copyWith(
-            scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
+        return MultiProvider(
+          providers: [
+            ChangeNotifierProvider(create: (_) => getIt<CheckLoginProvider>()),
+            ChangeNotifierProvider(
+              create: (_) => getIt<WishlistProvider>(),
+            ),
+          ],
+          child: MaterialApp.router(
+            routerConfig: AppRouter.router,
+            theme: ThemeData.dark().copyWith(
+              scaffoldBackgroundColor: const Color.fromARGB(255, 18, 32, 47),
+            ),
+            debugShowCheckedModeBanner: false,
           ),
-          debugShowCheckedModeBanner: false,
         );
       },
     ),

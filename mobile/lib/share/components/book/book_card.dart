@@ -9,11 +9,13 @@ class BookCard extends StatelessWidget {
   final int feedbacksCount;
   final bool isWishlist;
   final bool isInWishlist;
+  final bool isWishlistMode;
   final String baseImageUrl;
   final VoidCallback? onQuickView;
   final VoidCallback? onAddToCart;
   final VoidCallback? onAddToWishlist;
   final VoidCallback? onRemoveFromWishlist;
+  final VoidCallback? onDelete;
   final VoidCallback? onTap;
 
   const BookCard({
@@ -27,10 +29,12 @@ class BookCard extends StatelessWidget {
     required this.baseImageUrl,
     this.isWishlist = false,
     this.isInWishlist = false,
+    this.isWishlistMode = false,
     this.onQuickView,
     this.onAddToCart,
     this.onAddToWishlist,
     this.onRemoveFromWishlist,
+    this.onDelete,
     this.onTap,
   });
 
@@ -108,27 +112,38 @@ class BookCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                Positioned(
-                  top: 12,
-                  right: 12,
-                  child: Column(
-                    children: [
-                      _ActionButton(
-                        icon: isInWishlist
-                            ? Icons.favorite
-                            : Icons.favorite_border,
-                        iconColor: isInWishlist ? Colors.red : Colors.black87,
-                        onPressed: _handleToggleWishlist,
-                      ),
-                      const SizedBox(height: 8),
-                      _ActionButton(
-                        icon: Icons.remove_red_eye_outlined,
-                        iconColor: Colors.black87,
-                        onPressed: onQuickView,
-                      ),
-                    ],
+                if (isWishlistMode)
+                  Positioned(
+                    top: 12,
+                    right: 12,
+                    child: _ActionButton(
+                      icon: Icons.delete_outline,
+                      iconColor: Colors.red,
+                      onPressed: onDelete,
+                    ),
+                  )
+                else
+                  Positioned(
+                    top: 12,
+                    right: 12,
+                    child: Column(
+                      children: [
+                        _ActionButton(
+                          icon: isInWishlist
+                              ? Icons.favorite
+                              : Icons.favorite_border,
+                          iconColor: isInWishlist ? Colors.red : Colors.black87,
+                          onPressed: _handleToggleWishlist,
+                        ),
+                        const SizedBox(height: 8),
+                        _ActionButton(
+                          icon: Icons.remove_red_eye_outlined,
+                          iconColor: Colors.black87,
+                          onPressed: onQuickView,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
                 Positioned(
                   bottom: 0,
                   left: 0,

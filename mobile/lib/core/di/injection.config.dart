@@ -42,6 +42,20 @@ import '../../features/home/domain/usecase/book/get_books.dart' as _i721;
 import '../../features/home/domain/usecase/category/get_list_category.dart'
     as _i258;
 import '../../features/home/presentation/provider/home_provider.dart' as _i376;
+import '../../features/wishlist/data/datasources/wishlist/wishlist_remote_datasource.dart'
+    as _i706;
+import '../../features/wishlist/data/repositories/wishlist_repository_impl.dart'
+    as _i919;
+import '../../features/wishlist/domain/repositories/wishlist_repository.dart'
+    as _i4;
+import '../../features/wishlist/domain/usecase/add_wishlist.dart' as _i354;
+import '../../features/wishlist/domain/usecase/delete_wishlist.dart' as _i90;
+import '../../features/wishlist/domain/usecase/get_wishlist.dart' as _i516;
+import '../../features/wishlist/presentation/provider/wishlist_provider.dart'
+    as _i150;
+import '../../share/data/datasources/global/check_login_datasource.dart'
+    as _i490;
+import '../../share/provider/global/check_login_provider.dart' as _i1049;
 import '../network/dio_client.dart' as _i667;
 import '../storage/local_storage_service.dart' as _i744;
 
@@ -74,14 +88,28 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i851.BookRemoteDataSource(gh<_i361.Dio>()));
     gh.lazySingleton<_i590.CategoryRemoteDataSource>(
         () => _i590.CategoryRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i706.WishlistRemoteDataSource>(
+        () => _i706.WishlistRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i490.CheckLoginDatasource>(
+        () => _i490.CheckLoginDatasource(gh<_i361.Dio>()));
+    gh.factory<_i1049.CheckLoginProvider>(() => _i1049.CheckLoginProvider(
+        checkLoginDatasource: gh<_i490.CheckLoginDatasource>()));
     gh.lazySingleton<_i441.CategoryRepository>(() =>
         _i392.CategoryRepositoryImpl(gh<_i590.CategoryRemoteDataSource>()));
     gh.lazySingleton<_i787.AuthRepository>(
         () => _i153.AuthRepositoryImpl(gh<_i161.AuthRemoteDataSource>()));
     gh.lazySingleton<_i772.BookRepository>(
         () => _i297.BookRepositoryImpl(gh<_i851.BookRemoteDataSource>()));
+    gh.lazySingleton<_i4.WishlistRepository>(() =>
+        _i919.WishlistRepositoryImpl(gh<_i706.WishlistRemoteDataSource>()));
     gh.lazySingleton<_i258.GetListCategoriesUseCase>(
         () => _i258.GetListCategoriesUseCase(gh<_i441.CategoryRepository>()));
+    gh.lazySingleton<_i354.AddWishListUseCase>(
+        () => _i354.AddWishListUseCase(gh<_i4.WishlistRepository>()));
+    gh.lazySingleton<_i90.DeleteWishListUseCase>(
+        () => _i90.DeleteWishListUseCase(gh<_i4.WishlistRepository>()));
+    gh.lazySingleton<_i516.GetWishListUseCase>(
+        () => _i516.GetWishListUseCase(gh<_i4.WishlistRepository>()));
     gh.lazySingleton<_i721.GetBooksUseCase>(
         () => _i721.GetBooksUseCase(gh<_i772.BookRepository>()));
     gh.lazySingleton<_i892.PostLoginUseCase>(
@@ -95,6 +123,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i376.HomeProvider>(() => _i376.HomeProvider(
           getBooksUseCase: gh<_i721.GetBooksUseCase>(),
           getListCategoriesUseCase: gh<_i258.GetListCategoriesUseCase>(),
+        ));
+    gh.factory<_i150.WishlistProvider>(() => _i150.WishlistProvider(
+          gh<_i516.GetWishListUseCase>(),
+          gh<_i354.AddWishListUseCase>(),
+          gh<_i90.DeleteWishListUseCase>(),
         ));
     gh.factory<_i987.LoginProvider>(() => _i987.LoginProvider(
           postLoginUseCase: gh<_i892.PostLoginUseCase>(),
