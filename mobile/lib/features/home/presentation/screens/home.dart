@@ -4,8 +4,11 @@ import 'package:mobile/core/config/constant.dart';
 import 'package:mobile/core/helper/calculate_card_width.dart';
 import 'package:mobile/features/home/presentation/provider/home_provider.dart';
 import 'package:mobile/features/home/presentation/screens/carousel.dart';
+import 'package:mobile/features/wishlist/presentation/provider/wishlist_provider.dart';
 import 'package:mobile/share/components/book/book_card.dart';
 import 'package:mobile/share/components/category/category_card.dart';
+import 'package:mobile/share/components/styled_dialog.dart';
+import 'package:mobile/core/helper/protected_route.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,6 +35,7 @@ class _HomePageState extends State<HomePage> {
 
     // Load initial top borrowed books
     Future.microtask(() {
+      _refreshWishlist();
       context.read<HomeProvider>().getTopBorrowedBooks(1);
       context.read<HomeProvider>().getListCategories(1);
       context.read<HomeProvider>().getMostViewedBooks(1);
@@ -47,107 +51,127 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _refreshWishlist();
+  }
+
+  /// Refresh wishlist data
+  ///
+  /// @return void
+  void _refreshWishlist() {
+    Future.microtask(() {
+      context.read<WishlistProvider>().initializeWishList();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      color: Colors.white,
-      child: Column(
-        children: [
-          const Carousel(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildTopBooksHeader(
-                  "Top Sách",
-                  "Top sách được mượn nhiều nhất",
-                ),
-                SizedBox(height: 16.h),
-                _buildTopBorrowedBooks(),
-                SizedBox(height: 16.h),
-                _buildTopBooksHeader("Thể loại", "Thể loại"),
-                SizedBox(height: 16.h),
-                _buildCategories(),
-                SizedBox(height: 16.h),
-                _buildTopBooksHeader(
-                  "Sách được xem nhiều",
-                  "Top sách được xem nhiều",
-                ),
-                SizedBox(height: 16.h),
-                _buildMostViewedBooks(),
-                SizedBox(height: 16.h),
-                Image.asset(
-                  'assets/images/banner.png',
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-                SizedBox(height: 16.h),
-                _buildTopBooksHeader("Sách mới", "Sách mới"),
-                SizedBox(height: 16.h),
-                _buildNewReleasedBooks(),
-                SizedBox(height: 16.h),
-                _buildTopBooksHeader("Sách viral", "Sách viral"),
-                SizedBox(height: 16.h),
-                SizedBox(
-                  width: double.infinity,
-                  height: 180.h,
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Image.asset(
-                          'assets/images/viralLeft.png',
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      SizedBox(width: 8.w),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Expanded(
-                              child: Image.asset(
-                                'assets/images/viralRightTop.png',
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                              ),
+    return Consumer<WishlistProvider>(
+      builder: (context, wishlistProvider, _) {
+        _showWishlistDialog(wishlistProvider);
+        return Container(
+          width: double.infinity,
+          color: Colors.white,
+          child: Column(
+            children: [
+              const Carousel(),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildTopBooksHeader(
+                      "Top Sách",
+                      "Top sách được mượn nhiều nhất",
+                    ),
+                    SizedBox(height: 16.h),
+                    _buildTopBorrowedBooks(),
+                    SizedBox(height: 16.h),
+                    _buildTopBooksHeader("Thể loại", "Thể loại"),
+                    SizedBox(height: 16.h),
+                    _buildCategories(),
+                    SizedBox(height: 16.h),
+                    _buildTopBooksHeader(
+                      "Sách được xem nhiều",
+                      "Top sách được xem nhiều",
+                    ),
+                    SizedBox(height: 16.h),
+                    _buildMostViewedBooks(),
+                    SizedBox(height: 16.h),
+                    Image.asset(
+                      'assets/images/banner.png',
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                    SizedBox(height: 16.h),
+                    _buildTopBooksHeader("Sách mới", "Sách mới"),
+                    SizedBox(height: 16.h),
+                    _buildNewReleasedBooks(),
+                    SizedBox(height: 16.h),
+                    _buildTopBooksHeader("Sách viral", "Sách viral"),
+                    SizedBox(height: 16.h),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 180.h,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Image.asset(
+                              'assets/images/viralLeft.png',
+                              width: double.infinity,
+                              fit: BoxFit.cover,
                             ),
-                            SizedBox(height: 8.h),
-                            Expanded(
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Image.asset(
-                                      'assets/images/viralBottomLeft.png',
-                                      width: double.infinity,
-                                      fit: BoxFit.cover,
-                                    ),
+                          ),
+                          SizedBox(width: 8.w),
+                          Expanded(
+                            child: Column(
+                              children: [
+                                Expanded(
+                                  child: Image.asset(
+                                    'assets/images/viralRightTop.png',
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
                                   ),
-                                  SizedBox(width: 8.w),
-                                  Expanded(
-                                    child: Image.asset(
-                                      'assets/images/viralBottomRight.png',
-                                      width: double.infinity,
-                                      fit: BoxFit.cover,
-                                    ),
+                                ),
+                                SizedBox(height: 8.h),
+                                Expanded(
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Image.asset(
+                                          'assets/images/viralBottomLeft.png',
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      SizedBox(width: 8.w),
+                                      Expanded(
+                                        child: Image.asset(
+                                          'assets/images/viralBottomRight.png',
+                                          width: double.infinity,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: 32.h),
+                    _buildServicesSection(),
+                    SizedBox(height: 32.h),
+                  ],
                 ),
-                SizedBox(height: 32.h),
-                _buildServicesSection(),
-                SizedBox(height: 32.h),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 
@@ -199,8 +223,8 @@ class _HomePageState extends State<HomePage> {
   ///
   /// @return {Widget}
   Widget _buildTopBorrowedBooks() {
-    return Consumer<HomeProvider>(
-      builder: (context, homeProvider, _) {
+    return Consumer2<HomeProvider, WishlistProvider>(
+      builder: (context, homeProvider, wishlistProvider, _) {
         final books = homeProvider.topBorrowedBooks?.data ?? [];
 
         if (books.isEmpty) {
@@ -237,17 +261,23 @@ class _HomePageState extends State<HomePage> {
                       bookId: book.id,
                       image: book.image,
                       name: book.name,
-                      authorName: book.author.name,
+                      authorName: book.author!.name,
                       averageStar: book.averageStar,
                       feedbacksCount: book.feedbacksCount,
                       baseImageUrl: AppConstants.BASE_URL_IMAGE,
-                      isInWishlist: false,
+                      isInWishlist: wishlistProvider.isInWishList(book.id),
                       onQuickView: () => print('Quick view book ${book.id}'),
                       onAddToCart: () => print('Add to cart book ${book.id}'),
-                      onAddToWishlist: () =>
-                          print('Add to wishlist book ${book.id}'),
-                      onRemoveFromWishlist: () =>
-                          print('Remove from wishlist book ${book.id}'),
+                      onAddToWishlist: () async {
+                        if (await ensureLogin(context)) {
+                          wishlistProvider.addToWishList(book.id);
+                        }
+                      },
+                      onRemoveFromWishlist: () async {
+                        if (await ensureLogin(context)) {
+                          wishlistProvider.removeFromWishList(book.id);
+                        }
+                      },
                       onTap: () => print('Navigate to book detail ${book.id}'),
                     ),
                   );
@@ -357,8 +387,8 @@ class _HomePageState extends State<HomePage> {
   ///
   /// @return {Widget}
   Widget _buildMostViewedBooks() {
-    return Consumer<HomeProvider>(
-      builder: (context, homeProvider, _) {
+    return Consumer2<HomeProvider, WishlistProvider>(
+      builder: (context, homeProvider, wishlistProvider, _) {
         final books = homeProvider.mostViewedBooks?.data ?? [];
 
         if (books.isEmpty) {
@@ -395,17 +425,23 @@ class _HomePageState extends State<HomePage> {
                       bookId: book.id,
                       image: book.image,
                       name: book.name,
-                      authorName: book.author.name,
+                      authorName: book.author!.name,
                       averageStar: book.averageStar,
                       feedbacksCount: book.feedbacksCount,
                       baseImageUrl: AppConstants.BASE_URL_IMAGE,
-                      isInWishlist: false,
+                      isInWishlist: wishlistProvider.isInWishList(book.id),
                       onQuickView: () => print('Quick view book ${book.id}'),
                       onAddToCart: () => print('Add to cart book ${book.id}'),
-                      onAddToWishlist: () =>
-                          print('Add to wishlist book ${book.id}'),
-                      onRemoveFromWishlist: () =>
-                          print('Remove from wishlist book ${book.id}'),
+                      onAddToWishlist: () async {
+                        if (await ensureLogin(context)) {
+                          wishlistProvider.addToWishList(book.id);
+                        }
+                      },
+                      onRemoveFromWishlist: () async {
+                        if (await ensureLogin(context)) {
+                          wishlistProvider.removeFromWishList(book.id);
+                        }
+                      },
                       onTap: () => print('Navigate to book detail ${book.id}'),
                     ),
                   );
@@ -452,8 +488,8 @@ class _HomePageState extends State<HomePage> {
   ///
   /// @return {Widget}
   Widget _buildNewReleasedBooks() {
-    return Consumer<HomeProvider>(
-      builder: (context, homeProvider, _) {
+    return Consumer2<HomeProvider, WishlistProvider>(
+      builder: (context, homeProvider, wishlistProvider, _) {
         final books = homeProvider.newReleasedBooks?.data ?? [];
 
         if (books.isEmpty) {
@@ -485,17 +521,23 @@ class _HomePageState extends State<HomePage> {
                     bookId: book.id,
                     image: book.image,
                     name: book.name,
-                    authorName: book.author.name,
+                    authorName: book.author!.name,
                     averageStar: book.averageStar,
                     feedbacksCount: book.feedbacksCount,
                     baseImageUrl: AppConstants.BASE_URL_IMAGE,
-                    isInWishlist: false,
+                    isInWishlist: wishlistProvider.isInWishList(book.id),
                     onQuickView: () => print('Quick view book ${book.id}'),
                     onAddToCart: () => print('Add to cart book ${book.id}'),
-                    onAddToWishlist: () =>
-                        print('Add to wishlist book ${book.id}'),
-                    onRemoveFromWishlist: () =>
-                        print('Remove from wishlist book ${book.id}'),
+                    onAddToWishlist: () async {
+                      if (await ensureLogin(context)) {
+                        wishlistProvider.addToWishList(book.id);
+                      }
+                    },
+                    onRemoveFromWishlist: () async {
+                      if (await ensureLogin(context)) {
+                        wishlistProvider.removeFromWishList(book.id);
+                      }
+                    },
                     onTap: () => print('Navigate to book detail ${book.id}'),
                   ),
                 );
@@ -608,5 +650,25 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
+  }
+
+  /// Show wishlist action result dialog
+  ///
+  /// @param {WishlistProvider} wishlistProvider
+  ///
+  /// @return {void}
+  void _showWishlistDialog(WishlistProvider wishlistProvider) {
+    if (wishlistProvider.isShowDialog) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        wishlistProvider.isShowDialog = false;
+        showDialog(
+          context: context,
+          builder: (context) => StyledDialog(
+            message: wishlistProvider.message,
+            isSuccess: wishlistProvider.isSuccess,
+          ),
+        );
+      });
+    }
   }
 }

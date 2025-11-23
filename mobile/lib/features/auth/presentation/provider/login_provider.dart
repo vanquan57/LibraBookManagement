@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mobile/core/config/env.dart';
-import 'package:mobile/core/logger/logger.dart';
+import 'package:mobile/core/router/app_router.dart';
 import 'package:mobile/core/storage/local_storage_service.dart';
 import 'package:mobile/features/auth/domain/usecases/post_login.dart';
 import 'package:mobile/features/auth/data/models/token_data.dart';
 import 'package:mobile/features/auth/domain/usecases/post_login_google.dart';
 
-@injectable 
+@injectable
 class LoginProvider extends ChangeNotifier {
   final PostLoginUseCase postLoginUseCase;
   final PostLoginGoogleUseCase postLoginGoogleUseCase;
@@ -74,8 +75,10 @@ class LoginProvider extends ChangeNotifier {
 
   /// Login with Google account
   ///
+  /// @param BuildContext context
+  ///
   /// @return Future<void>
-  Future<void> loginGoogle() async {
+  Future<void> loginGoogle(BuildContext context) async {
     final googleSignIn = GoogleSignIn(
       clientId: Env.googleClientId,
       scopes: ['email', 'profile'],
@@ -84,7 +87,7 @@ class LoginProvider extends ChangeNotifier {
     await googleSignIn.signOut();
 
     final googleUser = await googleSignIn.signIn();
-    
+
     if (googleUser == null) {
       debugPrint("Người dùng hủy đăng nhập Google");
       return;
@@ -105,6 +108,10 @@ class LoginProvider extends ChangeNotifier {
 
       // Save token data to local storage
       await localStorageService.saveAccessToken(_tokenData!.accessToken);
+
+      if (context.mounted) {
+        context.go(AppRouter.home);
+      }
     } else {
       if (response.errors is Map) {
         _errorMessageLoginGoogle = response.errors['error_message']?.toString();

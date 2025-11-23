@@ -1,7 +1,9 @@
 // lib/features/auth/presentation/screens/login_form.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile/core/config/constant.dart';
+import 'package:mobile/core/router/app_router.dart';
 import 'package:mobile/core/utils/validators.dart';
 import 'package:mobile/share/components/styled_dialog.dart';
 import 'package:mobile/features/auth/presentation/provider/login_provider.dart';
@@ -53,6 +55,8 @@ class _LoginFormState extends State<LoginForm> {
       if (!mounted) return;
 
       if (result) {
+        context.push(AppRouter.home);
+
         _formKey.currentState!.reset();
         emailController.clear();
         passwordController.clear();
@@ -204,7 +208,7 @@ class _LoginFormState extends State<LoginForm> {
             height: 50.h,
             child: ElevatedButton(
               onPressed: () async {
-                await loginProvider.loginGoogle(); // Call loginGoogle
+                await loginProvider.loginGoogle(context); // Call loginGoogle
 
                 if (loginProvider.isShowDialog &&
                     loginProvider.errorMessageLoginGoogle != null) {

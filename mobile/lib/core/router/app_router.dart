@@ -2,7 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/di/injection.dart';
+import 'package:mobile/core/helper/protected_route.dart';
 import 'package:mobile/features/home/presentation/provider/home_provider.dart';
+import 'package:mobile/features/wishlist/presentation/provider/wishlist_provider.dart';
+import 'package:mobile/features/wishlist/presentation/screens/wishlist.dart';
 import 'package:mobile/share/components/layouts/main_layout.dart';
 import 'package:mobile/features/auth/presentation/screens/login_signup_switcher.dart';
 import 'package:mobile/features/home/presentation/screens/home.dart';
@@ -12,6 +15,7 @@ class AppRouter {
   static const String splash = '/';
   static const String auth = '/auth';
   static const String home = '/home';
+  static const String wishlist = '/wishlist';
 
   // GoRouter configuration
   static final GoRouter router = GoRouter(
@@ -44,6 +48,14 @@ class AppRouter {
             child: MainLayout(child: const HomePage()),
           );
         },
+      ),
+      // Wishlist route
+      protectedRoute(
+        path: AppRouter.wishlist,
+        pathLogin: AppRouter.auth,
+        child: MainLayout(child: const Wishlist()),
+        providerFactory: () =>
+            ChangeNotifierProvider(create: (_) => getIt<WishlistProvider>()),
       ),
     ],
 

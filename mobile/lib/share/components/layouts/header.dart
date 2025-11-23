@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mobile/features/wishlist/presentation/provider/wishlist_provider.dart';
+import 'package:provider/provider.dart';
 
 class Header extends StatefulWidget implements PreferredSizeWidget {
   const Header({super.key});
@@ -19,6 +21,7 @@ class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     final String currentLocation = GoRouterState.of(context).uri.toString();
+    final wishlistProvider = context.watch<WishlistProvider>();
 
     return AppBar(
       automaticallyImplyLeading: false,
@@ -164,10 +167,52 @@ class _HeaderState extends State<Header> {
                             ),
                           ),
                           SizedBox(width: 12.w),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.favorite_border),
-                            color: Colors.black54,
+                          Stack(
+                            clipBehavior:
+                                Clip.none,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  context.push(
+                                    '/wishlist',
+                                  );
+                                },
+                                icon: const Icon(Icons.favorite_border),
+                                color: Colors.black54,
+                              ),
+                              if (wishlistProvider.wishListIds.isNotEmpty ?? false)
+                                Positioned(
+                                  right: 5,
+                                  top: 2,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(2),
+                                    decoration: const BoxDecoration(
+                                      color: Colors.red,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    constraints: const BoxConstraints(
+                                      minWidth: 16,
+                                      minHeight: 16,
+                                    ),
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      decoration: const BoxDecoration(
+                                        color: Color(0xFFFF6E38),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Text(
+                                        '${wishlistProvider.wishListIds.length}',
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      )
+                                    ),
+                                  ),
+                                ),
+                            ],
                           ),
                           IconButton(
                             onPressed: () {},
@@ -194,7 +239,7 @@ class _HeaderState extends State<Header> {
   }
 
   /// Build individual navigation item with highlighting for the selected page.
-  /// 
+  ///
   /// returns: Widget
   Widget _buildNavItem(String title, String route, String currentLocation) {
     final bool isSelected = currentLocation == route;
@@ -216,7 +261,7 @@ class _HeaderState extends State<Header> {
   }
 
   /// Show user menu when tapping the person icon 'My Account', 'My Orders', 'Wishlist', and 'Logout'.
-  /// 
+  ///
   /// returns: void
   void _showUserMenu(BuildContext context) {
     final RenderBox renderBox =

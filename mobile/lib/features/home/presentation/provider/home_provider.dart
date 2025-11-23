@@ -250,4 +250,22 @@ class HomeProvider extends ChangeNotifier {
 
     await getNewReleasedBooks(_currentPageNewReleasedBooks + 1, append: true);
   }
+
+  /// The method add book to wishlist
+  /// 
+  /// @param bookId The id of book
+  /// 
+  /// @return Future<void>
+  Future<void> addBookToWishlist(int bookId) async {
+      
+  }
+
+  /// The method remove book from wishlist
+  /// 
+  /// @param bookId The id of book
+  /// 
+  /// @return Future<void>
+  Future<void> deleteBookFromWishlist(int bookId) async {
+      print('Remove book $bookId from wishlist');
+  }
 }
