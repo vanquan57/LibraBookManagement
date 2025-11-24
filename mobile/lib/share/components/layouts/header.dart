@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mobile/core/router/app_router.dart';
+import 'package:mobile/features/cart/presentation/provider/cart_provider.dart';
 import 'package:mobile/features/wishlist/presentation/provider/wishlist_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -214,10 +216,53 @@ class _HeaderState extends State<Header> {
                                 ),
                             ],
                           ),
-                          IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Icons.shopping_cart_outlined),
-                            color: Colors.black54,
+                          Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              IconButton(
+                                onPressed: () => context.push(AppRouter.cart),
+                                icon: const Icon(Icons.shopping_cart_outlined),
+                                color: Colors.black54,
+                              ),
+                              Selector<CartProvider, int>(
+                                selector: (_, provider) =>
+                                    provider.carts.length,
+                                builder: (_, count, __) {
+                                  if (count == 0) return SizedBox.shrink();
+
+                                  return Positioned(
+                                    right: 5,
+                                    top: 2,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(2),
+                                      decoration: const BoxDecoration(
+                                        color: Colors.red,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      constraints: const BoxConstraints(
+                                        minWidth: 16,
+                                        minHeight: 16,
+                                      ),
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        decoration: const BoxDecoration(
+                                          color: Color(0xFFFF6E38),
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Text(
+                                          '$count',
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ],
                           ),
                           IconButton(
                             key: _personIconKey,

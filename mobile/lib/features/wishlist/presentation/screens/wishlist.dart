@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/core/config/constant.dart';
 import 'package:mobile/core/helper/calculate_card_width.dart';
+import 'package:mobile/features/cart/presentation/provider/cart_provider.dart';
 import 'package:mobile/features/wishlist/presentation/provider/wishlist_provider.dart';
 import 'package:mobile/share/components/book/book_card.dart';
 import 'package:mobile/share/components/styled_dialog.dart';
+import 'package:mobile/core/helper/protected_route.dart';
 import 'package:provider/provider.dart';
 
 class Wishlist extends StatefulWidget {
@@ -38,10 +40,11 @@ class _WishlistState extends State<Wishlist> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<WishlistProvider>(
-      builder: (context, wishlistProvider, _) {
+    return Consumer2<WishlistProvider, CartProvider>(
+      builder: (context, wishlistProvider, cartProvider, _) {
         final books = wishlistProvider.wishList;
         _showWishlistDialog(wishlistProvider);
+        _showCartDialog(cartProvider);
 
         return Container(
           width: double.infinity,
@@ -76,12 +79,21 @@ class _WishlistState extends State<Wishlist> {
                   ],
                 ),
                 SizedBox(height: 20.h),
-                _buildWishlistBooks(wishlistProvider),
+                _buildWishlistBooks(wishlistProvider, cartProvider),
                 SizedBox(height: 20.h),
                 Flexible(
                   child: ElevatedButton(
-                    onPressed: () {
-                      // TODO: Add all to cart functionality
+                    onPressed: () async {
+                      if (await ensureLogin(context)) {
+                        final List<Map<String, dynamic>> carts = wishlistProvider.wishListIds.map((item) {
+                          return {
+                            'book_id': item,
+                            'quantity': 1,
+                          };
+                        }).toList();
+
+                        cartProvider.addToCart(carts);
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFFFF6E38),
@@ -114,7 +126,7 @@ class _WishlistState extends State<Wishlist> {
     );
   }
 
-  Widget _buildWishlistBooks(WishlistProvider wishlistProvider) {
+  Widget _buildWishlistBooks(WishlistProvider wishlistProvider, CartProvider cartProvider) {
     final books = wishlistProvider.wishList;
 
     if (books.isEmpty) {
@@ -164,12 +176,18 @@ class _WishlistState extends State<Wishlist> {
             image: book.image,
             name: book.name,
             authorName: book.author!.name,
-            averageStar: book.averageStar,
-            feedbacksCount: book.feedbacksCount,
+            averageStar: book.averageStar ?? 0,
+            feedbacksCount: book.feedbacksCount ?? 0,
             baseImageUrl: AppConstants.BASE_URL_IMAGE,
             isInWishlist: true,
             isWishlistMode: true,
-            onAddToCart: () => print('Add to cart book ${book.id}'),
+            onAddToCart: () async {
+              if (await ensureLogin(context)) {
+                cartProvider.addToCart([
+                  {'book_id': book.id, 'quantity': 1},
+                ]);
+              }
+            },
             onDelete: () {
               wishlistProvider.removeFromWishList(book.id);
             },
@@ -195,4 +213,45 @@ class _WishlistState extends State<Wishlist> {
       });
     }
   }
+
+  /// Show Cart action result dialog
+  ///
+  /// @param {CartProvider} cartProvider
+  ///
+  /// @return {void}
+  void _showCartDialog(CartProvider cartProvider) async {
+    if (cartProvider.isShowDialog) {
+      final isSuccess = cartProvider.isSuccess;
+      final message = cartProvider.message;
+      final errorMessage = cartProvider.errorMessage;
+      final isContinue = cartProvider.isContinue;
+
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        showDialog(
+          context: context,
+          builder: (context) => StyledDialog(
+            isSuccess: isContinue ? true : isSuccess,
+            message: isContinue ? message : (isSuccess ? message : errorMessage),
+          ),
+        );
+
+        await Future.delayed(const Duration(seconds: 3));
+        
+        if (!mounted) return;
+
+        if (isContinue == true) {
+          showDialog(
+            context: context,
+            builder: (context) => StyledDialog(
+              message: errorMessage,
+              isSuccess: false,
+            ),
+          );
+          if (!mounted) return;
+          cartProvider.isContinue = false;
+        }
+      });
+    }
+  }
+
 }
