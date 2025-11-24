@@ -25,8 +25,8 @@ Book _$BookFromJson(Map<String, dynamic> json) => Book(
       deletedAt: json['deleted_at'] as String?,
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
-      feedbacksCount: (json['feedbacks_count'] as num).toInt(),
-      averageStar: (json['average_star'] as num).toInt(),
+      feedbacksCount: (json['feedbacks_count'] as num?)?.toInt(),
+      averageStar: (json['average_star'] as num?)?.toInt(),
       author: json['author'] == null
           ? null
           : Author.fromJson(json['author'] as Map<String, dynamic>),

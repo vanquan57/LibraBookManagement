@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mobile/core/config/constant.dart';
 import 'package:mobile/core/helper/calculate_card_width.dart';
+import 'package:mobile/features/cart/presentation/provider/cart_provider.dart';
 import 'package:mobile/features/home/presentation/provider/home_provider.dart';
 import 'package:mobile/features/home/presentation/screens/carousel.dart';
 import 'package:mobile/features/wishlist/presentation/provider/wishlist_provider.dart';
@@ -36,6 +37,7 @@ class _HomePageState extends State<HomePage> {
     // Load initial top borrowed books
     Future.microtask(() {
       _refreshWishlist();
+      _refreshCart();
       context.read<HomeProvider>().getTopBorrowedBooks(1);
       context.read<HomeProvider>().getListCategories(1);
       context.read<HomeProvider>().getMostViewedBooks(1);
@@ -54,6 +56,7 @@ class _HomePageState extends State<HomePage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _refreshWishlist();
+    _refreshCart();
   }
 
   /// Refresh wishlist data
@@ -65,11 +68,22 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  /// Refresh cart data 
+  ///
+  /// @return void
+  void _refreshCart() {   
+    Future.microtask(() {
+      context.read<CartProvider>().getCart();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<WishlistProvider>(
-      builder: (context, wishlistProvider, _) {
+    return Consumer2<WishlistProvider, CartProvider>(
+      builder: (context, wishlistProvider, cartProvider, _) {
         _showWishlistDialog(wishlistProvider);
+        _showCartDialog(cartProvider);
+
         return Container(
           width: double.infinity,
           color: Colors.white,
@@ -223,8 +237,8 @@ class _HomePageState extends State<HomePage> {
   ///
   /// @return {Widget}
   Widget _buildTopBorrowedBooks() {
-    return Consumer2<HomeProvider, WishlistProvider>(
-      builder: (context, homeProvider, wishlistProvider, _) {
+    return Consumer3<HomeProvider, WishlistProvider, CartProvider>(
+      builder: (context, homeProvider, wishlistProvider, cartProvider, _) {
         final books = homeProvider.topBorrowedBooks?.data ?? [];
 
         if (books.isEmpty) {
@@ -262,12 +276,18 @@ class _HomePageState extends State<HomePage> {
                       image: book.image,
                       name: book.name,
                       authorName: book.author!.name,
-                      averageStar: book.averageStar,
-                      feedbacksCount: book.feedbacksCount,
+                      averageStar: book.averageStar ?? 0,
+                      feedbacksCount: book.feedbacksCount ?? 0,
                       baseImageUrl: AppConstants.BASE_URL_IMAGE,
                       isInWishlist: wishlistProvider.isInWishList(book.id),
                       onQuickView: () => print('Quick view book ${book.id}'),
-                      onAddToCart: () => print('Add to cart book ${book.id}'),
+                      onAddToCart: () async {
+                        if (await ensureLogin(context)) {
+                          cartProvider.addToCart([
+                            {'book_id': book.id, 'quantity': 1}
+                          ]);
+                        }
+                      },
                       onAddToWishlist: () async {
                         if (await ensureLogin(context)) {
                           wishlistProvider.addToWishList(book.id);
@@ -387,8 +407,8 @@ class _HomePageState extends State<HomePage> {
   ///
   /// @return {Widget}
   Widget _buildMostViewedBooks() {
-    return Consumer2<HomeProvider, WishlistProvider>(
-      builder: (context, homeProvider, wishlistProvider, _) {
+    return Consumer3<HomeProvider, WishlistProvider, CartProvider>(
+      builder: (context, homeProvider, wishlistProvider, cartProvider, _) {
         final books = homeProvider.mostViewedBooks?.data ?? [];
 
         if (books.isEmpty) {
@@ -426,12 +446,18 @@ class _HomePageState extends State<HomePage> {
                       image: book.image,
                       name: book.name,
                       authorName: book.author!.name,
-                      averageStar: book.averageStar,
-                      feedbacksCount: book.feedbacksCount,
+                      averageStar: book.averageStar ?? 0,
+                      feedbacksCount: book.feedbacksCount ?? 0,
                       baseImageUrl: AppConstants.BASE_URL_IMAGE,
                       isInWishlist: wishlistProvider.isInWishList(book.id),
                       onQuickView: () => print('Quick view book ${book.id}'),
-                      onAddToCart: () => print('Add to cart book ${book.id}'),
+                      onAddToCart: () async {
+                        if (await ensureLogin(context)) {
+                          cartProvider.addToCart([
+                            {'book_id': book.id, 'quantity': 1}
+                          ]);
+                        }
+                      },
                       onAddToWishlist: () async {
                         if (await ensureLogin(context)) {
                           wishlistProvider.addToWishList(book.id);
@@ -488,8 +514,8 @@ class _HomePageState extends State<HomePage> {
   ///
   /// @return {Widget}
   Widget _buildNewReleasedBooks() {
-    return Consumer2<HomeProvider, WishlistProvider>(
-      builder: (context, homeProvider, wishlistProvider, _) {
+    return Consumer3<HomeProvider, WishlistProvider, CartProvider>(
+      builder: (context, homeProvider, wishlistProvider, cartProvider, _) {
         final books = homeProvider.newReleasedBooks?.data ?? [];
 
         if (books.isEmpty) {
@@ -522,12 +548,18 @@ class _HomePageState extends State<HomePage> {
                     image: book.image,
                     name: book.name,
                     authorName: book.author!.name,
-                    averageStar: book.averageStar,
-                    feedbacksCount: book.feedbacksCount,
+                    averageStar: book.averageStar ?? 0,
+                    feedbacksCount: book.feedbacksCount ?? 0,
                     baseImageUrl: AppConstants.BASE_URL_IMAGE,
                     isInWishlist: wishlistProvider.isInWishList(book.id),
                     onQuickView: () => print('Quick view book ${book.id}'),
-                    onAddToCart: () => print('Add to cart book ${book.id}'),
+                    onAddToCart: () async {
+                      if (await ensureLogin(context)) {
+                        cartProvider.addToCart([
+                          {'book_id': book.id, 'quantity': 1}
+                        ]);
+                      }
+                    },
                     onAddToWishlist: () async {
                       if (await ensureLogin(context)) {
                         wishlistProvider.addToWishList(book.id);
@@ -666,6 +698,26 @@ class _HomePageState extends State<HomePage> {
           builder: (context) => StyledDialog(
             message: wishlistProvider.message,
             isSuccess: wishlistProvider.isSuccess,
+          ),
+        );
+      });
+    }
+  }
+
+  /// Show Cart action result dialog
+  ///
+  /// @param {CartProvider} cartProvider
+  ///
+  /// @return {void}
+  void _showCartDialog(CartProvider cartProvider) {
+    if (cartProvider.isShowDialog) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        cartProvider.isShowDialog = false;
+        showDialog(
+          context: context,
+          builder: (context) => StyledDialog(
+            message: cartProvider.isSuccess ? cartProvider.message : cartProvider.errorMessage,
+            isSuccess: cartProvider.isSuccess,
           ),
         );
       });

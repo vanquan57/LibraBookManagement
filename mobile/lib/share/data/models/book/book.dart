@@ -34,9 +34,9 @@ class Book {
   @JsonKey(name: 'updated_at')
   final String? updatedAt;
   @JsonKey(name: 'feedbacks_count')
-  final int feedbacksCount;
+  final int? feedbacksCount;
   @JsonKey(name: 'average_star')
-  final int averageStar;
+  final int? averageStar;
   final Author? author;
   final Publisher? publisher;
 
@@ -59,8 +59,8 @@ class Book {
     this.deletedAt,
     this.createdAt,
     this.updatedAt,
-    required this.feedbacksCount,
-    required this.averageStar,
+    this.feedbacksCount,
+    this.averageStar,
     this.author,
     this.publisher,
   });

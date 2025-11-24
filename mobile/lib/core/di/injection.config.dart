@@ -26,6 +26,16 @@ import '../../features/auth/domain/usecases/post_register_google.dart'
 import '../../features/auth/presentation/provider/login_provider.dart' as _i987;
 import '../../features/auth/presentation/provider/register_provider.dart'
     as _i1046;
+import '../../features/cart/data/datasources/cart/cart_remote_datasource.dart'
+    as _i763;
+import '../../features/cart/data/repositories/card_repository_impl.dart'
+    as _i332;
+import '../../features/cart/domain/repositories/cart_repository.dart' as _i322;
+import '../../features/cart/domain/usecase/add_card.dart' as _i584;
+import '../../features/cart/domain/usecase/delete_card.dart' as _i787;
+import '../../features/cart/domain/usecase/get_card.dart' as _i613;
+import '../../features/cart/domain/usecase/update_card.dart' as _i466;
+import '../../features/cart/presentation/provider/cart_provider.dart' as _i137;
 import '../../features/home/data/datasources/book/book_remote_datasource.dart'
     as _i851;
 import '../../features/home/data/datasources/category/category_remote_datasource.dart'
@@ -84,6 +94,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => dioModule.provideDio(gh<_i667.DioClient>()));
     gh.lazySingleton<_i161.AuthRemoteDataSource>(
         () => _i161.AuthRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i763.CartRemoteDataSource>(
+        () => _i763.CartRemoteDataSource(gh<_i361.Dio>()));
     gh.lazySingleton<_i851.BookRemoteDataSource>(
         () => _i851.BookRemoteDataSource(gh<_i361.Dio>()));
     gh.lazySingleton<_i590.CategoryRemoteDataSource>(
@@ -98,6 +110,8 @@ extension GetItInjectableX on _i174.GetIt {
         _i392.CategoryRepositoryImpl(gh<_i590.CategoryRemoteDataSource>()));
     gh.lazySingleton<_i787.AuthRepository>(
         () => _i153.AuthRepositoryImpl(gh<_i161.AuthRemoteDataSource>()));
+    gh.lazySingleton<_i322.CartRepository>(
+        () => _i332.CartRepositoryImpl(gh<_i763.CartRemoteDataSource>()));
     gh.lazySingleton<_i772.BookRepository>(
         () => _i297.BookRepositoryImpl(gh<_i851.BookRemoteDataSource>()));
     gh.lazySingleton<_i4.WishlistRepository>(() =>
@@ -120,6 +134,14 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i166.PostRegisterUseCase(gh<_i787.AuthRepository>()));
     gh.lazySingleton<_i1046.PostRegisterGoogleUseCase>(
         () => _i1046.PostRegisterGoogleUseCase(gh<_i787.AuthRepository>()));
+    gh.lazySingleton<_i584.AddCartUseCase>(
+        () => _i584.AddCartUseCase(gh<_i322.CartRepository>()));
+    gh.lazySingleton<_i787.DeleteCartUseCase>(
+        () => _i787.DeleteCartUseCase(gh<_i322.CartRepository>()));
+    gh.lazySingleton<_i613.GetCartUseCase>(
+        () => _i613.GetCartUseCase(gh<_i322.CartRepository>()));
+    gh.lazySingleton<_i466.UpdateCartUseCase>(
+        () => _i466.UpdateCartUseCase(gh<_i322.CartRepository>()));
     gh.factory<_i376.HomeProvider>(() => _i376.HomeProvider(
           getBooksUseCase: gh<_i721.GetBooksUseCase>(),
           getListCategoriesUseCase: gh<_i258.GetListCategoriesUseCase>(),
@@ -138,6 +160,12 @@ extension GetItInjectableX on _i174.GetIt {
           postRegisterUseCase: gh<_i166.PostRegisterUseCase>(),
           postRegisterGoogleUseCase: gh<_i1046.PostRegisterGoogleUseCase>(),
           localStorageService: gh<_i744.LocalStorageService>(),
+        ));
+    gh.factory<_i137.CartProvider>(() => _i137.CartProvider(
+          gh<_i613.GetCartUseCase>(),
+          gh<_i584.AddCartUseCase>(),
+          gh<_i787.DeleteCartUseCase>(),
+          gh<_i466.UpdateCartUseCase>(),
         ));
     return this;
   }

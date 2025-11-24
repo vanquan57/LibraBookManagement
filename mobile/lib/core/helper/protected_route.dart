@@ -8,11 +8,15 @@ GoRoute protectedRoute({
   required String path,
   required String pathLogin,
   required Widget child,
-  required dynamic Function() providerFactory,
+  dynamic Function()? providerFactory,
 }) {
   return GoRoute(
     path: path,
     builder: (_, __) {
+      if (providerFactory == null) {
+        return child;
+      }
+
       final providers = providerFactory();
 
       final providerList = providers is List
