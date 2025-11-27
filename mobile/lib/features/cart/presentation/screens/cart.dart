@@ -473,7 +473,7 @@ class _CartScreenState extends State<CartScreen> {
     }).toList();
 
     context.read<CartProvider>().cartCheckoutData = data;
-    print("sssssssssssssss");
-    print(context.read<CartProvider>().cartCheckoutData);
+
+    context.go(AppRouter.checkout);
   }
 }

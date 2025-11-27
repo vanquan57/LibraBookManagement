@@ -6,5 +6,5 @@ import 'package:intl/intl.dart';
 /// 
 /// @return String
 String formatDay(DateTime date) {
-  return DateFormat('dd/MM/yyyy').format(date);
+  return DateFormat('yyyy-MM-dd').format(DateTime.parse(date.toString()));
 }
