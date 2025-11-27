@@ -85,4 +85,39 @@ class Validators {
 
     return null;
   }
+
+  static String? phone(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Vui lòng nhập số điện thoại';
+    }
+
+    if (!RegExp(r'^[0-9]{10,11}$').hasMatch(value)) {
+      return 'Vui lòng nhập số điện thoại hợp lệ (10-11 số)';
+    }
+
+    return null;
+  }
+
+  static String? address(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Vui lòng nhập địa chỉ';
+    }
+
+    if (value.length < 5) {
+      return 'Địa chỉ phải có ít nhất 5 ký tự';
+    }
+
+    if (value.length > 200) {
+      return 'Địa chỉ không được vượt quá 200 ký tự';
+    }
+
+    return null;
+  }
+
+  static String? dropdown(int? value, String fieldName) {
+    if (value == null) {
+      return 'Vui lòng chọn $fieldName';
+    }
+    return null;
+  }
 }

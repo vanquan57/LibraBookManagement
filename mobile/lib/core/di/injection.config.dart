@@ -36,6 +36,39 @@ import '../../features/cart/domain/usecase/delete_card.dart' as _i787;
 import '../../features/cart/domain/usecase/get_card.dart' as _i613;
 import '../../features/cart/domain/usecase/update_card.dart' as _i466;
 import '../../features/cart/presentation/provider/cart_provider.dart' as _i137;
+import '../../features/checkout/data/datasources/checkout/checkout_remote_datasource.dart'
+    as _i174;
+import '../../features/checkout/data/datasources/district/district_remote_datasource.dart'
+    as _i737;
+import '../../features/checkout/data/datasources/profile/profile_remote_datasource.dart'
+    as _i398;
+import '../../features/checkout/data/datasources/province/province_remote_datasource.dart'
+    as _i60;
+import '../../features/checkout/data/datasources/ward/ward_remote_datasource.dart'
+    as _i400;
+import '../../features/checkout/data/repositories/address_repository_impl.dart'
+    as _i464;
+import '../../features/checkout/data/repositories/checkout_repository_impl.dart'
+    as _i949;
+import '../../features/checkout/data/repositories/profile_repository_impl.dart'
+    as _i81;
+import '../../features/checkout/domain/repositories/address_repository.dart'
+    as _i24;
+import '../../features/checkout/domain/repositories/checkout_repository.dart'
+    as _i498;
+import '../../features/checkout/domain/repositories/profile_repository.dart'
+    as _i283;
+import '../../features/checkout/domain/usecase/address/get_districts.dart'
+    as _i23;
+import '../../features/checkout/domain/usecase/address/get_provinces.dart'
+    as _i7;
+import '../../features/checkout/domain/usecase/address/get_wards.dart' as _i320;
+import '../../features/checkout/domain/usecase/checkout/submit_checkout.dart'
+    as _i842;
+import '../../features/checkout/domain/usecase/profile/profile_checkout.dart'
+    as _i879;
+import '../../features/checkout/presentation/provider/checkout_provider.dart'
+    as _i687;
 import '../../features/home/data/datasources/book/book_remote_datasource.dart'
     as _i851;
 import '../../features/home/data/datasources/category/category_remote_datasource.dart'
@@ -104,12 +137,33 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i706.WishlistRemoteDataSource(gh<_i361.Dio>()));
     gh.lazySingleton<_i490.CheckLoginDatasource>(
         () => _i490.CheckLoginDatasource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i174.CheckoutRemoteDataSource>(
+        () => _i174.CheckoutRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i737.DistrictRemoteDataSource>(
+        () => _i737.DistrictRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i398.ProfileRemoteDataSource>(
+        () => _i398.ProfileRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i60.ProvinceRemoteDataSource>(
+        () => _i60.ProvinceRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i400.WardRemoteDataSource>(
+        () => _i400.WardRemoteDataSource(gh<_i361.Dio>()));
     gh.factory<_i1049.CheckLoginProvider>(() => _i1049.CheckLoginProvider(
         checkLoginDatasource: gh<_i490.CheckLoginDatasource>()));
     gh.lazySingleton<_i441.CategoryRepository>(() =>
         _i392.CategoryRepositoryImpl(gh<_i590.CategoryRemoteDataSource>()));
+    gh.lazySingleton<_i24.AddressRepository>(() => _i464.AddressRepositoryImpl(
+          gh<_i60.ProvinceRemoteDataSource>(),
+          gh<_i737.DistrictRemoteDataSource>(),
+          gh<_i400.WardRemoteDataSource>(),
+        ));
     gh.lazySingleton<_i787.AuthRepository>(
         () => _i153.AuthRepositoryImpl(gh<_i161.AuthRemoteDataSource>()));
+    gh.lazySingleton<_i498.CheckoutRepository>(() =>
+        _i949.CheckoutRepositoryImpl(gh<_i174.CheckoutRemoteDataSource>()));
+    gh.lazySingleton<_i283.ProfileRepository>(
+        () => _i81.ProfileRepositoryImpl(gh<_i398.ProfileRemoteDataSource>()));
+    gh.lazySingleton<_i842.SubmitCheckoutUseCase>(
+        () => _i842.SubmitCheckoutUseCase(gh<_i498.CheckoutRepository>()));
     gh.lazySingleton<_i322.CartRepository>(
         () => _i332.CartRepositoryImpl(gh<_i763.CartRemoteDataSource>()));
     gh.lazySingleton<_i772.BookRepository>(
@@ -118,6 +172,12 @@ extension GetItInjectableX on _i174.GetIt {
         _i919.WishlistRepositoryImpl(gh<_i706.WishlistRemoteDataSource>()));
     gh.lazySingleton<_i258.GetListCategoriesUseCase>(
         () => _i258.GetListCategoriesUseCase(gh<_i441.CategoryRepository>()));
+    gh.lazySingleton<_i23.GetDistrictsUseCase>(
+        () => _i23.GetDistrictsUseCase(gh<_i24.AddressRepository>()));
+    gh.lazySingleton<_i7.GetProvincesUseCase>(
+        () => _i7.GetProvincesUseCase(gh<_i24.AddressRepository>()));
+    gh.lazySingleton<_i320.GetWardsUseCase>(
+        () => _i320.GetWardsUseCase(gh<_i24.AddressRepository>()));
     gh.lazySingleton<_i354.AddWishListUseCase>(
         () => _i354.AddWishListUseCase(gh<_i4.WishlistRepository>()));
     gh.lazySingleton<_i90.DeleteWishListUseCase>(
@@ -142,6 +202,15 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i613.GetCartUseCase(gh<_i322.CartRepository>()));
     gh.lazySingleton<_i466.UpdateCartUseCase>(
         () => _i466.UpdateCartUseCase(gh<_i322.CartRepository>()));
+    gh.lazySingleton<_i879.ProfileCheckoutUseCase>(
+        () => _i879.ProfileCheckoutUseCase(gh<_i283.ProfileRepository>()));
+    gh.factory<_i687.CheckoutProvider>(() => _i687.CheckoutProvider(
+          gh<_i7.GetProvincesUseCase>(),
+          gh<_i23.GetDistrictsUseCase>(),
+          gh<_i320.GetWardsUseCase>(),
+          gh<_i879.ProfileCheckoutUseCase>(),
+          gh<_i842.SubmitCheckoutUseCase>(),
+        ));
     gh.factory<_i376.HomeProvider>(() => _i376.HomeProvider(
           getBooksUseCase: gh<_i721.GetBooksUseCase>(),
           getListCategoriesUseCase: gh<_i258.GetListCategoriesUseCase>(),

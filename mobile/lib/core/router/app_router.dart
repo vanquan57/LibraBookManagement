@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile/core/di/injection.dart';
 import 'package:mobile/core/helper/protected_route.dart';
 import 'package:mobile/features/cart/presentation/screens/cart.dart';
+import 'package:mobile/features/checkout/presentation/provider/checkout_provider.dart';
+import 'package:mobile/features/checkout/presentation/screens/checkout.dart';
 import 'package:mobile/features/home/presentation/provider/home_provider.dart';
 import 'package:mobile/features/wishlist/presentation/screens/wishlist.dart';
 import 'package:mobile/share/components/layouts/main_layout.dart';
@@ -17,6 +19,7 @@ class AppRouter {
   static const String home = '/home';
   static const String wishlist = '/wishlist';
   static const String cart = '/cart';
+  static const String checkout = '/checkout';
 
   // GoRouter configuration
   static final GoRouter router = GoRouter(
@@ -61,6 +64,17 @@ class AppRouter {
         path: AppRouter.cart,
         pathLogin: AppRouter.auth,
         child: MainLayout(child: const CartScreen()),
+      ),
+      // Checkout route
+      protectedRoute(
+        path: AppRouter.checkout,     
+        pathLogin: AppRouter.auth,
+        providerFactory: () => [
+          ChangeNotifierProvider<CheckoutProvider>(
+            create: (_) => getIt<CheckoutProvider>(),
+          ),
+        ],
+        child: MainLayout(child: const CheckoutScreen()),
       ),
     ],
 
