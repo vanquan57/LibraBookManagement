@@ -26,6 +26,28 @@ import '../../features/auth/domain/usecases/post_register_google.dart'
 import '../../features/auth/presentation/provider/login_provider.dart' as _i987;
 import '../../features/auth/presentation/provider/register_provider.dart'
     as _i1046;
+import '../../features/book_details/data/datasources/book/book_remote_datasource.dart'
+    as _i432;
+import '../../features/book_details/data/datasources/feedback/feedback_remote_datasource.dart'
+    as _i100;
+import '../../features/book_details/data/repositories/book/book_details_repository_impl.dart'
+    as _i1054;
+import '../../features/book_details/data/repositories/feedback/feedback_repository_impl.dart'
+    as _i93;
+import '../../features/book_details/domain/repositories/book/book_repository.dart'
+    as _i565;
+import '../../features/book_details/domain/repositories/feedback/feedback_repository.dart'
+    as _i748;
+import '../../features/book_details/domain/usecase/book/get_book_details.dart'
+    as _i733;
+import '../../features/book_details/domain/usecase/book/get_book_same_category.dart'
+    as _i641;
+import '../../features/book_details/domain/usecase/feedback/create_feedback.dart'
+    as _i274;
+import '../../features/book_details/domain/usecase/feedback/get_feedbacks.dart'
+    as _i593;
+import '../../features/book_details/presentation/provider/book_details_provider.dart'
+    as _i217;
 import '../../features/cart/data/datasources/cart/cart_remote_datasource.dart'
     as _i763;
 import '../../features/cart/data/repositories/card_repository_impl.dart'
@@ -162,16 +184,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => dioModule.provideDio(gh<_i667.DioClient>()));
     gh.lazySingleton<_i161.AuthRemoteDataSource>(
         () => _i161.AuthRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i432.BookRemoteDataSource>(
+        () => _i432.BookRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i100.FeedbackRemoteDataSource>(
+        () => _i100.FeedbackRemoteDataSource(gh<_i361.Dio>()));
     gh.lazySingleton<_i763.CartRemoteDataSource>(
         () => _i763.CartRemoteDataSource(gh<_i361.Dio>()));
-    gh.lazySingleton<_i851.BookRemoteDataSource>(
-        () => _i851.BookRemoteDataSource(gh<_i361.Dio>()));
-    gh.lazySingleton<_i590.CategoryRemoteDataSource>(
-        () => _i590.CategoryRemoteDataSource(gh<_i361.Dio>()));
-    gh.lazySingleton<_i706.WishlistRemoteDataSource>(
-        () => _i706.WishlistRemoteDataSource(gh<_i361.Dio>()));
-    gh.lazySingleton<_i490.CheckLoginDatasource>(
-        () => _i490.CheckLoginDatasource(gh<_i361.Dio>()));
     gh.lazySingleton<_i174.CheckoutRemoteDataSource>(
         () => _i174.CheckoutRemoteDataSource(gh<_i361.Dio>()));
     gh.lazySingleton<_i737.DistrictRemoteDataSource>(
@@ -182,6 +200,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i60.ProvinceRemoteDataSource(gh<_i361.Dio>()));
     gh.lazySingleton<_i400.WardRemoteDataSource>(
         () => _i400.WardRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i851.BookRemoteDataSource>(
+        () => _i851.BookRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i590.CategoryRemoteDataSource>(
+        () => _i590.CategoryRemoteDataSource(gh<_i361.Dio>()));
     gh.lazySingleton<_i868.AuthorRemoteDataSource>(
         () => _i868.AuthorRemoteDataSource(gh<_i361.Dio>()));
     gh.lazySingleton<_i951.BookRemoteDataSource>(
@@ -190,6 +212,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i546.CategoryRemoteDataSource(gh<_i361.Dio>()));
     gh.lazySingleton<_i692.PublisherRemoteDataSource>(
         () => _i692.PublisherRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i706.WishlistRemoteDataSource>(
+        () => _i706.WishlistRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i490.CheckLoginDatasource>(
+        () => _i490.CheckLoginDatasource(gh<_i361.Dio>()));
     gh.factory<_i1049.CheckLoginProvider>(() => _i1049.CheckLoginProvider(
         checkLoginDatasource: gh<_i490.CheckLoginDatasource>()));
     gh.lazySingleton<_i270.CategoryRepository>(() =>
@@ -201,6 +227,8 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i737.DistrictRemoteDataSource>(),
           gh<_i400.WardRemoteDataSource>(),
         ));
+    gh.lazySingleton<_i565.BookRepository>(
+        () => _i1054.BookRepositoryImpl(gh<_i432.BookRemoteDataSource>()));
     gh.lazySingleton<_i716.PublisherRepository>(() =>
         _i953.PublisherRepositoryImpl(gh<_i692.PublisherRemoteDataSource>()));
     gh.lazySingleton<_i838.GetListPublisherUseCase>(
@@ -209,6 +237,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i809.GetListCategoriesUseCase(gh<_i270.CategoryRepository>()));
     gh.lazySingleton<_i787.AuthRepository>(
         () => _i153.AuthRepositoryImpl(gh<_i161.AuthRemoteDataSource>()));
+    gh.lazySingleton<_i748.FeedbackRepository>(() =>
+        _i93.FeedbackRepositoryImpl(gh<_i100.FeedbackRemoteDataSource>()));
     gh.lazySingleton<_i498.CheckoutRepository>(() =>
         _i949.CheckoutRepositoryImpl(gh<_i174.CheckoutRemoteDataSource>()));
     gh.lazySingleton<_i729.AuthorRepository>(
@@ -245,6 +275,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i516.GetWishListUseCase(gh<_i4.WishlistRepository>()));
     gh.lazySingleton<_i721.GetBooksUseCase>(
         () => _i721.GetBooksUseCase(gh<_i772.BookRepository>()));
+    gh.lazySingleton<_i733.GetBookDetailUseCase>(
+        () => _i733.GetBookDetailUseCase(gh<_i565.BookRepository>()));
+    gh.lazySingleton<_i641.GetBookSameCategoryUseCase>(
+        () => _i641.GetBookSameCategoryUseCase(gh<_i565.BookRepository>()));
     gh.lazySingleton<_i892.PostLoginUseCase>(
         () => _i892.PostLoginUseCase(gh<_i787.AuthRepository>()));
     gh.lazySingleton<_i332.PostLoginGoogleUseCase>(
@@ -263,6 +297,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i466.UpdateCartUseCase(gh<_i322.CartRepository>()));
     gh.lazySingleton<_i879.ProfileCheckoutUseCase>(
         () => _i879.ProfileCheckoutUseCase(gh<_i283.ProfileRepository>()));
+    gh.lazySingleton<_i274.CreateFeedbackUseCase>(
+        () => _i274.CreateFeedbackUseCase(gh<_i748.FeedbackRepository>()));
+    gh.lazySingleton<_i593.GetFeedbacksUseCase>(
+        () => _i593.GetFeedbacksUseCase(gh<_i748.FeedbackRepository>()));
     gh.factory<_i687.CheckoutProvider>(() => _i687.CheckoutProvider(
           gh<_i7.GetProvincesUseCase>(),
           gh<_i23.GetDistrictsUseCase>(),
@@ -284,6 +322,12 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i516.GetWishListUseCase>(),
           gh<_i354.AddWishListUseCase>(),
           gh<_i90.DeleteWishListUseCase>(),
+        ));
+    gh.factory<_i217.BookDetailsProvider>(() => _i217.BookDetailsProvider(
+          getBookDetailUseCase: gh<_i733.GetBookDetailUseCase>(),
+          getBookSameCategoryUseCase: gh<_i641.GetBookSameCategoryUseCase>(),
+          getFeedbacksUseCase: gh<_i593.GetFeedbacksUseCase>(),
+          createFeedbackUseCase: gh<_i274.CreateFeedbackUseCase>(),
         ));
     gh.factory<_i987.LoginProvider>(() => _i987.LoginProvider(
           postLoginUseCase: gh<_i892.PostLoginUseCase>(),

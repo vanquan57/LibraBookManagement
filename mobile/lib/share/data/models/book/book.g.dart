@@ -33,6 +33,12 @@ Book _$BookFromJson(Map<String, dynamic> json) => Book(
       publisher: json['publisher'] == null
           ? null
           : Publisher.fromJson(json['publisher'] as Map<String, dynamic>),
+      images: (json['images'] as List<dynamic>?)
+          ?.map((e) => BookImage.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      categories: (json['categories'] as List<dynamic>?)
+          ?.map((e) => Category.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$BookToJson(Book instance) => <String, dynamic>{
@@ -58,4 +64,6 @@ Map<String, dynamic> _$BookToJson(Book instance) => <String, dynamic>{
       'average_star': instance.averageStar,
       'author': instance.author,
       'publisher': instance.publisher,
+      'images': instance.images,
+      'categories': instance.categories,
     };

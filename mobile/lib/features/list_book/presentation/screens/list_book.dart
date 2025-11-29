@@ -608,7 +608,6 @@ class _ListBookScreenState extends State<ListBookScreen> {
                         wishlistProvider.removeFromWishList(book.id);
                       }
                     },
-                    onTap: () => print('Navigate to book detail ${book.id}'),
                   ),
                 );
               }).toList(),

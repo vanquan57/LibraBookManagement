@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/di/injection.dart';
 import 'package:mobile/core/helper/protected_route.dart';
+import 'package:mobile/features/book_details/presentation/provider/book_details_provider.dart';
+import 'package:mobile/features/book_details/presentation/screens/book_details.dart';
 import 'package:mobile/features/cart/presentation/screens/cart.dart';
 import 'package:mobile/features/checkout/presentation/provider/checkout_provider.dart';
 import 'package:mobile/features/checkout/presentation/screens/checkout.dart';
@@ -23,7 +25,8 @@ class AppRouter {
   static const String cart = '/cart';
   static const String checkout = '/checkout';
   static const String listBook = '/list_book';
-  
+  static const String bookDetails = '/book_details';
+
   // GoRouter configuration
   static final GoRouter router = GoRouter(
     initialLocation: home, // ✅ Screen default
@@ -87,6 +90,19 @@ class AppRouter {
           return ChangeNotifierProvider<ListBookProvider>(
             create: (_) => getIt<ListBookProvider>(),
             child: const ListBookScreen(),
+          );
+        },
+      ),
+      // Book details route
+      GoRoute(
+        path: '$bookDetails/:id',
+        name: 'book_details', 
+        builder: (context, state) {
+          final bookId = state.pathParameters['id']!;
+
+          return ChangeNotifierProvider<BookDetailsProvider>(
+            create: (_) => getIt<BookDetailsProvider>(),
+            child: MainLayout(child: BookDetails(bookId: int.parse(bookId))),
           );
         },
       ),

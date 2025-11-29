@@ -18,12 +18,12 @@ class User {
   final String? googleId;
   final String? avatar;
   @JsonKey(name: 'province_id')
-  final int provinceId;
+  final int? provinceId;
   @JsonKey(name: 'district_id')
-  final int districtId;
+  final int? districtId;
   @JsonKey(name: 'ward_id')
-  final int wardId;
-  final String address;
+  final int? wardId;
+  final String? address;
   final int status;
   @JsonKey(name: 'deleted_at')
   final String? deletedAt;
@@ -44,10 +44,10 @@ class User {
     required this.role,
     this.googleId,
     this.avatar,
-    required this.provinceId,
-    required this.districtId,
-    required this.wardId,
-    required this.address,
+    this.provinceId,
+    this.districtId,
+    this.wardId,
+    this.address,
     required this.status,
     this.deletedAt,
     required this.createdAt,

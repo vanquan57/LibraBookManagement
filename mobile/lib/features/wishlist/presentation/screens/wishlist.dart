@@ -191,7 +191,6 @@ class _WishlistState extends State<Wishlist> {
             onDelete: () {
               wishlistProvider.removeFromWishList(book.id);
             },
-            onTap: () => print('Navigate to book detail ${book.id}'),
           ),
         );
       }).toList(),
