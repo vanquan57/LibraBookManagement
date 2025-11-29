@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobile/share/data/models/author/author.dart';
+import 'package:mobile/share/data/models/book/image/image.dart';
+import 'package:mobile/share/data/models/category/category.dart';
 import 'package:mobile/share/data/models/publisher/publisher.dart';
 part 'book.g.dart';
 
@@ -39,6 +41,8 @@ class Book {
   final int? averageStar;
   final Author? author;
   final Publisher? publisher;
+  final List<BookImage>? images;
+  final List<Category>? categories;
 
   Book({
     required this.id,
@@ -63,6 +67,8 @@ class Book {
     this.averageStar,
     this.author,
     this.publisher,
+    this.images,
+    this.categories,
   });
 
   factory Book.fromJson(Map<String, dynamic> json) => _$BookFromJson(json);

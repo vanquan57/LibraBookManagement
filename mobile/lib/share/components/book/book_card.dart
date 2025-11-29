@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mobile/core/router/app_router.dart';
 
 class BookCard extends StatelessWidget {
   final int bookId;
@@ -16,7 +18,6 @@ class BookCard extends StatelessWidget {
   final VoidCallback? onAddToWishlist;
   final VoidCallback? onRemoveFromWishlist;
   final VoidCallback? onDelete;
-  final VoidCallback? onTap;
 
   const BookCard({
     super.key,
@@ -35,7 +36,6 @@ class BookCard extends StatelessWidget {
     this.onAddToWishlist,
     this.onRemoveFromWishlist,
     this.onDelete,
-    this.onTap,
   });
 
   String _getImageUrl() {
@@ -70,10 +70,12 @@ class BookCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Stack(
+              Stack(
               children: [
                 GestureDetector(
-                  onTap: onTap,
+                  onTap: () {
+                    context.push('${AppRouter.bookDetails}/$bookId');
+                  },
                   child: ClipRRect(
                     borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(12),

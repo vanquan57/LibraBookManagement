@@ -120,4 +120,23 @@ class Validators {
     }
     return null;
   }
+
+  static String? feedbackContent(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Nội dung đánh giá không được để trống';
+    }
+
+    if (value.length > 255) {
+      return 'Nội dung đánh giá không được quá 255 ký tự';
+    }
+
+    return null;
+  }
+
+  static String? feedbackStar(int? value) {
+    if (value == null || value == 0) {
+      return 'Vui lòng chọn số sao đánh giá';
+    }
+    return null;
+  }
 }

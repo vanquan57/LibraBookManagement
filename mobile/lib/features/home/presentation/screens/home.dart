@@ -298,7 +298,6 @@ class _HomePageState extends State<HomePage> {
                           wishlistProvider.removeFromWishList(book.id);
                         }
                       },
-                      onTap: () => print('Navigate to book detail ${book.id}'),
                     ),
                   );
                 },
@@ -468,7 +467,6 @@ class _HomePageState extends State<HomePage> {
                           wishlistProvider.removeFromWishList(book.id);
                         }
                       },
-                      onTap: () => print('Navigate to book detail ${book.id}'),
                     ),
                   );
                 },
@@ -570,7 +568,6 @@ class _HomePageState extends State<HomePage> {
                         wishlistProvider.removeFromWishList(book.id);
                       }
                     },
-                    onTap: () => print('Navigate to book detail ${book.id}'),
                   ),
                 );
               }).toList(),
