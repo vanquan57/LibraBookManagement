@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/router/app_router.dart';
 import 'package:mobile/features/cart/presentation/provider/cart_provider.dart';
+import 'package:mobile/features/list_book/presentation/provider/list_book_provider.dart';
 import 'package:mobile/features/wishlist/presentation/provider/wishlist_provider.dart';
+import 'package:mobile/share/provider/global/header_provider.dart';
 import 'package:provider/provider.dart';
 
 class Header extends StatefulWidget implements PreferredSizeWidget {
@@ -19,11 +21,13 @@ class Header extends StatefulWidget implements PreferredSizeWidget {
 class _HeaderState extends State<Header> {
   String _selectedLanguage = 'English';
   final GlobalKey _personIconKey = GlobalKey();
+  final querySearchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final String currentLocation = GoRouterState.of(context).uri.toString();
     final wishlistProvider = context.watch<WishlistProvider>();
+    final headerProvider = context.watch<HeaderProvider>();
 
     return AppBar(
       automaticallyImplyLeading: false,
@@ -123,9 +127,14 @@ class _HeaderState extends State<Header> {
                     ),
                     SizedBox(height: 10.h),
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      padding: EdgeInsets.symmetric(horizontal: 5),
                       child: Row(
                         children: [
+                          if (currentLocation == AppRouter.listBook)
+                            IconButton(
+                              onPressed: () => _handleMenuClick(context, currentLocation),
+                              icon: const Icon(Icons.menu),
+                            ),
                           Expanded(
                             child: Container(
                               height: 45,
@@ -135,8 +144,9 @@ class _HeaderState extends State<Header> {
                               ),
                               child: Row(
                                 children: [
-                                  const Expanded(
-                                    child: TextField(
+                                  Expanded(
+                                    child: TextFormField(
+                                      controller: querySearchController,
                                       decoration: InputDecoration(
                                         hintText: 'Tìm kiếm sách',
                                         hintStyle: TextStyle(
@@ -159,8 +169,16 @@ class _HeaderState extends State<Header> {
                                         bottomRight: Radius.circular(8),
                                       ),
                                     ),
-                                    child: const Icon(
-                                      Icons.search,
+                                    child: IconButton(
+                                      icon: const Icon(Icons.search),
+                                      onPressed: () {
+                                        headerProvider.setQuerySearch(querySearchController.text.trim());
+                                        querySearchController.clear();
+
+                                        if (currentLocation != AppRouter.listBook) {
+                                          context.push(AppRouter.listBook);
+                                        }
+                                      },
                                       color: Colors.black54,
                                     ),
                                   ),
@@ -182,7 +200,7 @@ class _HeaderState extends State<Header> {
                                 icon: const Icon(Icons.favorite_border),
                                 color: Colors.black54,
                               ),
-                              if (wishlistProvider.wishListIds.isNotEmpty ?? false)
+                              if (wishlistProvider.wishListIds.isNotEmpty)
                                 Positioned(
                                   right: 5,
                                   top: 2,
@@ -281,6 +299,14 @@ class _HeaderState extends State<Header> {
         ),
       ),
     );
+  }
+
+  /// Handle menu icon click - toggle sidebar on list_book page
+  ///
+  /// returns: void
+  void _handleMenuClick(BuildContext context, String currentLocation) {
+      final listBookProvider = context.read<ListBookProvider>();
+      listBookProvider.toggleSidebar();
   }
 
   /// Build individual navigation item with highlighting for the selected page.

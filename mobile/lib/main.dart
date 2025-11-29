@@ -6,6 +6,7 @@ import 'package:mobile/core/router/app_router.dart';
 import 'package:mobile/features/cart/presentation/provider/cart_provider.dart';
 import 'package:mobile/features/wishlist/presentation/provider/wishlist_provider.dart';
 import 'package:mobile/share/provider/global/check_login_provider.dart';
+import 'package:mobile/share/provider/global/header_provider.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -32,6 +33,9 @@ Future<void> main() async {
             ),
             ChangeNotifierProvider(
               create: (_) => getIt<CartProvider>(),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => getIt<HeaderProvider>(),
             ),
           ],
           child: MaterialApp.router(

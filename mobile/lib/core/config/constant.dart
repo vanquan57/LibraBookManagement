@@ -7,5 +7,6 @@ class AppConstants {
   static const int FALSE = 0;
   static const int LIMIT_BOOK = 6;
   static const int LIMIT_CATEGORY = 6;
+  static const int LIMIT_INFINITY = 9007199254740991;
   static const String DEFAULT_ORDER = 'desc';
 }
