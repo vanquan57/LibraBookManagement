@@ -7,6 +7,8 @@ import 'package:mobile/features/cart/presentation/screens/cart.dart';
 import 'package:mobile/features/checkout/presentation/provider/checkout_provider.dart';
 import 'package:mobile/features/checkout/presentation/screens/checkout.dart';
 import 'package:mobile/features/home/presentation/provider/home_provider.dart';
+import 'package:mobile/features/list_book/presentation/provider/list_book_provider.dart';
+import 'package:mobile/features/list_book/presentation/screens/list_book.dart';
 import 'package:mobile/features/wishlist/presentation/screens/wishlist.dart';
 import 'package:mobile/share/components/layouts/main_layout.dart';
 import 'package:mobile/features/auth/presentation/screens/login_signup_switcher.dart';
@@ -20,7 +22,8 @@ class AppRouter {
   static const String wishlist = '/wishlist';
   static const String cart = '/cart';
   static const String checkout = '/checkout';
-
+  static const String listBook = '/list_book';
+  
   // GoRouter configuration
   static final GoRouter router = GoRouter(
     initialLocation: home, // ✅ Screen default
@@ -75,6 +78,17 @@ class AppRouter {
           ),
         ],
         child: MainLayout(child: const CheckoutScreen()),
+      ),
+      // List book
+      GoRoute(
+        path: listBook,
+        name: 'list_book',
+        builder: (context, state) {
+          return ChangeNotifierProvider<ListBookProvider>(
+            create: (_) => getIt<ListBookProvider>(),
+            child: const ListBookScreen(),
+          );
+        },
       ),
     ],
 
