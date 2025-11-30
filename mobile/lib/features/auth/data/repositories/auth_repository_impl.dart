@@ -44,4 +44,24 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<ApiResponse<TokenData>> registerWithGoogle(String accessToken, String code) async {
     return await remoteDataSource.registerWithGoogle(accessToken, code);
   }
+
+  /// Update password
+  ///
+  /// @param String currentPassword
+  /// @param String newPassword
+  /// @param String confirmPassword
+  ///
+  /// @return Future<ApiResponse<String>>
+  @override
+  Future<ApiResponse<String>> updatePassword(
+    String currentPassword,
+    String newPassword,
+    String confirmPassword,
+  ) async {
+    return await remoteDataSource.updatePassword(
+      currentPassword,
+      newPassword,
+      confirmPassword,
+    );
+  }
 }

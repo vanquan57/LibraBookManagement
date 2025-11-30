@@ -135,4 +135,11 @@ class Validators {
     }
     return null;
   }
+
+  static String? currentPassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Vui lòng nhập mật khẩu cũ';
+    }
+    return null;
+  }
 }

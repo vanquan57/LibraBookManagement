@@ -144,4 +144,43 @@ class AuthRemoteDataSource {
       );
     }
   }
+
+  /// Update password
+  ///
+  /// @param String currentPassword
+  /// @param String newPassword
+  /// @param String confirmPassword
+  ///
+  /// @return ApiResponse<String>
+  Future<ApiResponse<String>> updatePassword(
+    String currentPassword,
+    String newPassword,
+    String confirmPassword,
+  ) async {
+    try {
+      final response = await _dio.put(
+        '/auth/change-password',
+        data: {
+          'current_password': currentPassword,
+          'password': newPassword,
+          'confirm_password': confirmPassword,
+        },
+      );
+
+      return ApiResponse.fromJson(
+        response.data,
+        (json) => json['message'] as String,
+      );
+    } on DioException catch (e) {
+      log.e('Update password failed: ${getErrorMessage(e)}');
+
+      return ApiResponse.failure(getErrorMessage(e));
+    } catch (e) {
+      log.e('Update password failed w: $e');
+
+      return ApiResponse.failure(
+        'Đã có lỗi không mong muốn xảy ra. Vui lòng thử lại sau.',
+      );
+    }
+  } 
 }

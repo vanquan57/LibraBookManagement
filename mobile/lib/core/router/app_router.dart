@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mobile/core/di/injection.dart';
 import 'package:mobile/core/helper/protected_route.dart';
+import 'package:mobile/features/auth/presentation/provider/change_password_provider.dart';
+import 'package:mobile/features/auth/presentation/screens/change_password.dart';
 import 'package:mobile/features/book_details/presentation/provider/book_details_provider.dart';
 import 'package:mobile/features/book_details/presentation/screens/book_details.dart';
 import 'package:mobile/features/cart/presentation/screens/cart.dart';
@@ -29,7 +31,8 @@ class AppRouter {
   static const String listBook = '/list_book';
   static const String bookDetails = '/book_details';
   static const String profile = '/profile';
-
+  static const String changePassword = '/change_password';
+  
   // GoRouter configuration
   static final GoRouter router = GoRouter(
     initialLocation: home, // ✅ Screen default
@@ -119,6 +122,17 @@ class AppRouter {
           ),
         ],
         child: MainLayout(child: const Profile()),
+      ),
+      // Change password route
+      protectedRoute(
+        path: AppRouter.changePassword,     
+        pathLogin: AppRouter.auth,
+        providerFactory: () => [
+          ChangeNotifierProvider<ChangePasswordProvider>(
+            create: (_) => getIt<ChangePasswordProvider>(),
+          ),
+        ],
+        child: MainLayout(child: const ChangePassword()),
       ),
     ],
 
