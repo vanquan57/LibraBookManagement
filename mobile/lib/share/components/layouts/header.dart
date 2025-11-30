@@ -352,7 +352,7 @@ class _HeaderState extends State<Header> {
       color: const Color(0xFFB8B594),
       items: [
         PopupMenuItem(
-          enabled: false,
+          onTap: () => context.push(AppRouter.profile),
           child: Row(
             children: const [
               Icon(Icons.person_outline, color: Colors.white),
