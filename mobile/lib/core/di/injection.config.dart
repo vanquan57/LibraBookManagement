@@ -94,6 +94,10 @@ import '../../features/checkout/domain/usecase/profile/profile_checkout.dart'
     as _i879;
 import '../../features/checkout/presentation/provider/checkout_provider.dart'
     as _i687;
+import '../../features/contact%20copy/presentation/provider/about_provider.dart'
+    as _i873;
+import '../../features/contact/presentation/provider/contact_provider.dart'
+    as _i321;
 import '../../features/home/data/datasources/book/book_remote_datasource.dart'
     as _i851;
 import '../../features/home/data/datasources/category/category_remote_datasource.dart'
@@ -202,6 +206,8 @@ extension GetItInjectableX on _i174.GetIt {
     final localStorageModule = _$LocalStorageModule();
     final dioModule = _$DioModule();
     gh.factory<_i235.HeaderProvider>(() => _i235.HeaderProvider());
+    gh.factory<_i321.ContactProvider>(() => _i321.ContactProvider());
+    gh.factory<_i873.AboutProvider>(() => _i873.AboutProvider());
     await gh.lazySingletonAsync<_i460.SharedPreferences>(
       () => localStorageModule.prefs,
       preResolve: true,
