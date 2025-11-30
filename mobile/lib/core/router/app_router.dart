@@ -10,6 +10,8 @@ import 'package:mobile/features/book_details/presentation/screens/book_details.d
 import 'package:mobile/features/cart/presentation/screens/cart.dart';
 import 'package:mobile/features/checkout/presentation/provider/checkout_provider.dart';
 import 'package:mobile/features/checkout/presentation/screens/checkout.dart';
+import 'package:mobile/features/contact/presentation/provider/contact_provider.dart';
+import 'package:mobile/features/contact/presentation/screens/contact.dart';
 import 'package:mobile/features/home/presentation/provider/home_provider.dart';
 import 'package:mobile/features/list_book/presentation/provider/list_book_provider.dart';
 import 'package:mobile/features/list_book/presentation/screens/list_book.dart';
@@ -32,6 +34,7 @@ class AppRouter {
   static const String bookDetails = '/book_details';
   static const String profile = '/profile';
   static const String changePassword = '/change_password';
+  static const String contact = '/contact';
   
   // GoRouter configuration
   static final GoRouter router = GoRouter(
@@ -133,6 +136,17 @@ class AppRouter {
           ),
         ],
         child: MainLayout(child: const ChangePassword()),
+      ),
+      // Book details route
+      GoRoute(
+        path: contact,
+        name: 'contact', 
+        builder: (context, state) {
+          return ChangeNotifierProvider<ContactProvider>(
+            create: (_) => getIt<ContactProvider>(),
+            child: MainLayout(child: const Contact()),
+          );
+        },
       ),
     ],
 
