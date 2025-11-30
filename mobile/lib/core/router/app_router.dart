@@ -11,6 +11,8 @@ import 'package:mobile/features/checkout/presentation/screens/checkout.dart';
 import 'package:mobile/features/home/presentation/provider/home_provider.dart';
 import 'package:mobile/features/list_book/presentation/provider/list_book_provider.dart';
 import 'package:mobile/features/list_book/presentation/screens/list_book.dart';
+import 'package:mobile/features/profile/presentation/provider/profile_provider.dart';
+import 'package:mobile/features/profile/presentation/screens/profile.dart';
 import 'package:mobile/features/wishlist/presentation/screens/wishlist.dart';
 import 'package:mobile/share/components/layouts/main_layout.dart';
 import 'package:mobile/features/auth/presentation/screens/login_signup_switcher.dart';
@@ -26,6 +28,7 @@ class AppRouter {
   static const String checkout = '/checkout';
   static const String listBook = '/list_book';
   static const String bookDetails = '/book_details';
+  static const String profile = '/profile';
 
   // GoRouter configuration
   static final GoRouter router = GoRouter(
@@ -105,6 +108,17 @@ class AppRouter {
             child: MainLayout(child: BookDetails(bookId: int.parse(bookId))),
           );
         },
+      ),
+            // Checkout route
+      protectedRoute(
+        path: AppRouter.profile,     
+        pathLogin: AppRouter.auth,
+        providerFactory: () => [
+          ChangeNotifierProvider<ProfileProvider>(
+            create: (_) => getIt<ProfileProvider>(),
+          ),
+        ],
+        child: MainLayout(child: const Profile()),
       ),
     ],
 
