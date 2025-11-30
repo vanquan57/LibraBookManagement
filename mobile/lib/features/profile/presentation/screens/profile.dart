@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mobile/core/router/app_router.dart';
 import 'package:mobile/core/utils/validators.dart';
 import 'package:mobile/features/profile/presentation/provider/profile_provider.dart';
 import 'package:mobile/share/components/styled_dialog.dart';
@@ -235,14 +237,10 @@ class _ProfileState extends State<Profile> {
           ),
           // Change password button
           TextButton.icon(
-            onPressed: () {
-              // TODO: Navigate to change password screen
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Tính năng đổi mật khẩu đang được phát triển'),
-                  duration: Duration(seconds: 2),
-                ),
-              );
+            onPressed: () async {
+              if (await ensureLogin(context)) {
+                context.push(AppRouter.changePassword);
+              }
             },
             icon: const Icon(Icons.lock_outline, size: 18),
             label: const Text('Đổi mật khẩu'),

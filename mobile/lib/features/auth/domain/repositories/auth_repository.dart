@@ -41,4 +41,17 @@ abstract class AuthRepository {
   ///
   /// @return Future<ApiResponse<TokenData>>
   Future<ApiResponse<TokenData>> registerWithGoogle(String accessToken, String code);
+
+  /// Update password
+  ///
+  /// @param String currentPassword
+  /// @param String newPassword
+  /// @param String confirmPassword
+  ///
+  /// @return Future<ApiResponse<String>>
+  Future<ApiResponse<String>> updatePassword(
+    String currentPassword,
+    String newPassword,
+    String confirmPassword,
+  );
 }

@@ -23,6 +23,9 @@ import '../../features/auth/domain/usecases/post_login_google.dart' as _i332;
 import '../../features/auth/domain/usecases/post_register.dart' as _i166;
 import '../../features/auth/domain/usecases/post_register_google.dart'
     as _i1046;
+import '../../features/auth/domain/usecases/update_password.dart' as _i455;
+import '../../features/auth/presentation/provider/change_password_provider.dart'
+    as _i872;
 import '../../features/auth/presentation/provider/login_provider.dart' as _i987;
 import '../../features/auth/presentation/provider/register_provider.dart'
     as _i1046;
@@ -339,6 +342,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i166.PostRegisterUseCase(gh<_i787.AuthRepository>()));
     gh.lazySingleton<_i1046.PostRegisterGoogleUseCase>(
         () => _i1046.PostRegisterGoogleUseCase(gh<_i787.AuthRepository>()));
+    gh.lazySingleton<_i455.UpdatePasswordUseCase>(
+        () => _i455.UpdatePasswordUseCase(gh<_i787.AuthRepository>()));
     gh.lazySingleton<_i584.AddCartUseCase>(
         () => _i584.AddCartUseCase(gh<_i322.CartRepository>()));
     gh.lazySingleton<_i787.DeleteCartUseCase>(
@@ -370,6 +375,8 @@ extension GetItInjectableX on _i174.GetIt {
           getBooksUseCase: gh<_i721.GetBooksUseCase>(),
           getListCategoriesUseCase: gh<_i258.GetListCategoriesUseCase>(),
         ));
+    gh.factory<_i872.ChangePasswordProvider>(() => _i872.ChangePasswordProvider(
+        updatePasswordUseCase: gh<_i455.UpdatePasswordUseCase>()));
     gh.factory<_i150.WishlistProvider>(() => _i150.WishlistProvider(
           gh<_i516.GetWishListUseCase>(),
           gh<_i354.AddWishListUseCase>(),
