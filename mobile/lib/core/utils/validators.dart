@@ -103,10 +103,6 @@ class Validators {
       return 'Vui lòng nhập địa chỉ';
     }
 
-    if (value.length < 5) {
-      return 'Địa chỉ phải có ít nhất 5 ký tự';
-    }
-
     if (value.length > 200) {
       return 'Địa chỉ không được vượt quá 200 ký tự';
     }
