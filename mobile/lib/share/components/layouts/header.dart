@@ -118,7 +118,7 @@ class _HeaderState extends State<Header> {
                       children: [
                         _buildNavItem('Trang Chủ', '/home', currentLocation),
                         const SizedBox(width: 20),
-                        _buildNavItem('Liên Hệ', '/contact', currentLocation),
+                        _buildNavItem('Liên Hệ', AppRouter.contact, currentLocation),
                         const SizedBox(width: 20),
                         _buildNavItem('Giới Thiệu', '/about', currentLocation),
                         const SizedBox(width: 20),
