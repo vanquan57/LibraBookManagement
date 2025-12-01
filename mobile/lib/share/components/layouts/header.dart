@@ -403,7 +403,13 @@ class _HeaderState extends State<Header> {
           ),
         ),
         PopupMenuItem(
-          enabled: false,
+          onTap: () async {
+            final bool success = await context.read<HeaderProvider>().logout();
+            
+            if (success && context.mounted) {
+              context.pushReplacement(AppRouter.auth);  
+            }
+          },
           child: Row(
             children: const [
               Icon(Icons.logout, color: Colors.white),

@@ -64,4 +64,12 @@ class AuthRepositoryImpl implements AuthRepository {
       confirmPassword,
     );
   }
+  
+  /// Logout user
+  ///
+  /// @return Future<ApiResponse<String>>
+  @override
+  Future<ApiResponse<String>> logout() async {
+    return await remoteDataSource.logout();
+  }
 }
