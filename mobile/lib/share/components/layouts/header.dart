@@ -369,13 +369,13 @@ class _HeaderState extends State<Header> {
           ),
         ),
         PopupMenuItem(
-          enabled: false,
+          onTap: () => context.push(AppRouter.order),
           child: Row(
             children: const [
               Icon(Icons.shopping_bag_outlined, color: Colors.white),
               SizedBox(width: 12),
               Text(
-                'Đơn Hàng Của Tôi',
+                'Đơn Mượn Của Tôi',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,

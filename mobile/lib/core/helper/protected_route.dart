@@ -7,23 +7,28 @@ import 'package:provider/single_child_widget.dart';
 GoRoute protectedRoute({
   required String path,
   required String pathLogin,
-  required Widget child,
+  Widget? child,
+  Widget Function(BuildContext context, GoRouterState state)? builder,
   dynamic Function()? providerFactory,
 }) {
   return GoRoute(
     path: path,
-    builder: (_, __) {
+    builder: (context, state) {
+      // Get the widget from either child or builder
+      final widget = child ?? builder!(context, state);
+      
+      // If no providers, return widget directly
       if (providerFactory == null) {
-        return child;
+        return widget;
       }
 
+      // Wrap with providers
       final providers = providerFactory();
-
       final providerList = providers is List
           ? providers.cast<SingleChildWidget>()
           : [providers as SingleChildWidget];
 
-      return MultiProvider(providers: providerList, child: child);
+      return MultiProvider(providers: providerList, child: widget);
     },
     redirect: (context, state) async {
       final checkLoginProvider = Provider.of<CheckLoginProvider>(

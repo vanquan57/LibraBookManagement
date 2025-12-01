@@ -9,4 +9,15 @@ class AppConstants {
   static const int LIMIT_CATEGORY = 6;
   static const int LIMIT_INFINITY = 9007199254740991;
   static const String DEFAULT_ORDER = 'desc';
+  static const int LIMIT_ORDER = 6; 
+  static const int OVERDUE = 1;
+  static const int BORROWING = 2;
+  static const int MISSING = 3;
+  static const int RETURNED = 4;
+  static const Map<int, String> ORDER_STATUS = {
+    OVERDUE: 'Quá hạn',
+    BORROWING: 'Đang mượn',
+    MISSING: 'Mất sách',
+    RETURNED: 'Đã trả',
+  };
 }

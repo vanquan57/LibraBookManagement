@@ -871,24 +871,28 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
       if (checkoutProvider.message != null && checkoutProvider.isShowDialog) {
         if (!mounted) return;
+        final message = checkoutProvider.message!;
+
         showDialog(
           context: context,
           barrierDismissible: true,
           builder: (context) => StyledDialog(
-            message: checkoutProvider.message!,
+            message: message,
             isSuccess: true,
           ),
         );
 
         cartProvider.cartCheckoutData = [];
-        // TODO: Redirect to my orders page
+        context.go(AppRouter.order);
       } else if (checkoutProvider.errorMessage != null && checkoutProvider.isShowDialog) {
         if (!mounted) return;
+        final errorMessage = checkoutProvider.errorMessage!;
+        
         showDialog(
           context: context,
           barrierDismissible: true,
           builder: (context) => StyledDialog(
-            message: checkoutProvider.errorMessage!,
+            message: errorMessage,
             isSuccess: false,
           ),
         );
