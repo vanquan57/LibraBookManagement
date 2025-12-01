@@ -142,4 +142,30 @@ class Validators {
     }
     return null;
   }
+
+  static String? dateRange(DateTime? startDate, DateTime? endDate) {
+    if (startDate != null && endDate != null) {
+      if (endDate.isBefore(startDate)) {
+        return 'Ngày kết thúc phải sau ngày bắt đầu';
+      }
+    }
+    return null;
+  }
+
+  static String? startDate(DateTime? value) {
+    if (value == null) {
+      return null;
+    }
+    return null;
+  }
+
+  static String? endDate(DateTime? value, DateTime? startDate) {
+    if (value == null) {
+      return null;
+    }
+    if (startDate != null && value.isBefore(startDate)) {
+      return 'Ngày kết thúc phải sau ngày bắt đầu';
+    }
+    return null;
+  }
 }

@@ -17,6 +17,11 @@ import 'package:mobile/features/contact/presentation/screens/contact.dart';
 import 'package:mobile/features/home/presentation/provider/home_provider.dart';
 import 'package:mobile/features/list_book/presentation/provider/list_book_provider.dart';
 import 'package:mobile/features/list_book/presentation/screens/list_book.dart';
+import 'package:mobile/features/order/presentation/provider/address_details.provider.dart';
+import 'package:mobile/features/order/presentation/provider/order_details_provider.dart';
+import 'package:mobile/features/order/presentation/provider/order_provider.dart';
+import 'package:mobile/features/order/presentation/screens/order.dart';
+import 'package:mobile/features/order/presentation/screens/order_details.dart';
 import 'package:mobile/features/profile/presentation/provider/profile_provider.dart';
 import 'package:mobile/features/profile/presentation/screens/profile.dart';
 import 'package:mobile/features/wishlist/presentation/screens/wishlist.dart';
@@ -38,6 +43,8 @@ class AppRouter {
   static const String changePassword = '/change_password';
   static const String contact = '/contact';
   static const String about = '/about';
+  static const String order = '/order';
+  static const String orderDetails = '/order_details';
   
   // GoRouter configuration
   static final GoRouter router = GoRouter(
@@ -159,6 +166,37 @@ class AppRouter {
           return ChangeNotifierProvider<AboutProvider>(
             create: (_) => getIt<AboutProvider>(),
             child: MainLayout(child: const About()),
+          );
+        },
+      ),
+      // Order route
+      protectedRoute(
+        path: AppRouter.order,     
+        pathLogin: AppRouter.auth,
+        providerFactory: () => [
+          ChangeNotifierProvider<OrderProvider>(
+            create: (_) => getIt<OrderProvider>(),
+          ),
+        ],
+        child: MainLayout(child: const Order()),
+      ),
+      // Order details route
+      protectedRoute(
+        path: '${AppRouter.orderDetails}/:id',
+        pathLogin: AppRouter.auth,
+        providerFactory: () => [
+          ChangeNotifierProvider<OrderDetailsProvider>(
+            create: (_) => getIt<OrderDetailsProvider>(),
+          ),
+          ChangeNotifierProvider<AddressDetailsProvider>(
+            create: (_) => getIt<AddressDetailsProvider>(),
+          ),
+        ],
+        builder: (context, state) {
+          final orderId = state.pathParameters['id']!;
+
+          return MainLayout(
+            child: OrderDetails(orderId: int.parse(orderId)),
           );
         },
       ),
