@@ -54,4 +54,9 @@ abstract class AuthRepository {
     String newPassword,
     String confirmPassword,
   );
+
+  /// Logout user
+  ///
+  /// @return Future<ApiResponse<String>>
+  Future<ApiResponse<String>> logout();
 }

@@ -183,4 +183,27 @@ class AuthRemoteDataSource {
       );
     }
   } 
+
+  /// Logout user
+  ///
+  /// @return Future<ApiResponse<String>>
+  Future<ApiResponse<String>> logout() async {
+    try {
+      final response = await _dio.post('/auth/logout');
+      return ApiResponse.fromJson(
+        response.data,
+        (json) => json['message'] as String,
+      );
+    } on DioException catch (e) {
+      log.e('Logout failed: ${getErrorMessage(e)}');
+
+      return ApiResponse.failure(getErrorMessage(e));
+    } catch (e) {
+      log.e('Logout failed: $e');
+
+      return ApiResponse.failure(
+        'Đã có lỗi không mong muốn xảy ra. Vui lòng thử lại sau.',
+      );
+    }
+  }
 }

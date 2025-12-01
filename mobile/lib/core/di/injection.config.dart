@@ -20,6 +20,7 @@ import '../../features/auth/data/repositories/auth_repository_impl.dart'
 import '../../features/auth/domain/repositories/auth_repository.dart' as _i787;
 import '../../features/auth/domain/usecases/post_login.dart' as _i892;
 import '../../features/auth/domain/usecases/post_login_google.dart' as _i332;
+import '../../features/auth/domain/usecases/post_logout.dart' as _i787;
 import '../../features/auth/domain/usecases/post_register.dart' as _i166;
 import '../../features/auth/domain/usecases/post_register_google.dart'
     as _i1046;
@@ -237,7 +238,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     final localStorageModule = _$LocalStorageModule();
     final dioModule = _$DioModule();
-    gh.factory<_i235.HeaderProvider>(() => _i235.HeaderProvider());
     gh.factory<_i321.ContactProvider>(() => _i321.ContactProvider());
     gh.factory<_i873.AboutProvider>(() => _i873.AboutProvider());
     await gh.lazySingletonAsync<_i460.SharedPreferences>(
@@ -403,6 +403,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i1046.PostRegisterGoogleUseCase(gh<_i787.AuthRepository>()));
     gh.lazySingleton<_i455.UpdatePasswordUseCase>(
         () => _i455.UpdatePasswordUseCase(gh<_i787.AuthRepository>()));
+    gh.lazySingleton<_i787.PostLogoutUseCase>(
+        () => _i787.PostLogoutUseCase(gh<_i787.AuthRepository>()));
     gh.lazySingleton<_i584.AddCartUseCase>(
         () => _i584.AddCartUseCase(gh<_i322.CartRepository>()));
     gh.lazySingleton<_i787.DeleteCartUseCase>(
@@ -439,6 +441,10 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i253.GetOrderDetailsUseCase>(),
           gh<_i176.UpdateBookOrderUseCase>(),
         ));
+    gh.factory<_i235.HeaderProvider>(() => _i235.HeaderProvider(
+      postLogoutUseCase: gh<_i787.PostLogoutUseCase>(),
+      localStorageService: gh<_i744.LocalStorageService>(),
+    ));
     gh.factory<_i639.ListBookProvider>(() => _i639.ListBookProvider(
           getBooksUseCase: gh<_i941.GetBooksUseCase>(),
           getListCategoriesUseCase: gh<_i809.GetListCategoriesUseCase>(),
