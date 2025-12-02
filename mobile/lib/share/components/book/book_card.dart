@@ -13,7 +13,6 @@ class BookCard extends StatelessWidget {
   final bool isInWishlist;
   final bool isWishlistMode;
   final String baseImageUrl;
-  final VoidCallback? onQuickView;
   final VoidCallback? onAddToCart;
   final VoidCallback? onAddToWishlist;
   final VoidCallback? onRemoveFromWishlist;
@@ -31,7 +30,6 @@ class BookCard extends StatelessWidget {
     this.isWishlist = false,
     this.isInWishlist = false,
     this.isWishlistMode = false,
-    this.onQuickView,
     this.onAddToCart,
     this.onAddToWishlist,
     this.onRemoveFromWishlist,
@@ -141,7 +139,9 @@ class BookCard extends StatelessWidget {
                         _ActionButton(
                           icon: Icons.remove_red_eye_outlined,
                           iconColor: Colors.black87,
-                          onPressed: onQuickView,
+                          onPressed: () {
+                            context.push('${AppRouter.bookDetails}/$bookId');
+                          },
                         ),
                       ],
                     ),

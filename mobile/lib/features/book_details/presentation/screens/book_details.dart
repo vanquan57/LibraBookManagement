@@ -1025,9 +1025,6 @@ class _BookDetailsState extends State<BookDetails> {
                 feedbacksCount: book.feedbacksCount ?? 0,
                 baseImageUrl: AppConstants.BASE_URL_IMAGE,
                 isInWishlist: wishlistProvider.isInWishList(book.id),
-                onQuickView: () {
-                  context.go('${AppRouter.bookDetails}/${book.id}');
-                },
                 onAddToCart: () async {
                   if (await ensureLogin(context)) {
                     cartProvider.addToCart([
