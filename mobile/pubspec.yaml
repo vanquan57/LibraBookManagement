@@ -48,6 +48,7 @@ dependencies:
   shared_preferences: ^2.5.3
   # Routing
   go_router: ^16.1.0
+  app_links: ^6.4.1
   # Logger
   logger: ^2.6.1
   # Path Provider

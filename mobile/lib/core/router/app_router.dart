@@ -4,7 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:mobile/core/di/injection.dart';
 import 'package:mobile/core/helper/protected_route.dart';
 import 'package:mobile/features/auth/presentation/provider/change_password_provider.dart';
+import 'package:mobile/features/auth/presentation/provider/reset_password_provider.dart';
+import 'package:mobile/features/auth/presentation/provider/verify_email_provider.dart';
 import 'package:mobile/features/auth/presentation/screens/change_password.dart';
+import 'package:mobile/features/auth/presentation/screens/reset_password.dart';
+import 'package:mobile/features/auth/presentation/screens/verify_email.dart';
 import 'package:mobile/features/book_details/presentation/provider/book_details_provider.dart';
 import 'package:mobile/features/book_details/presentation/screens/book_details.dart';
 import 'package:mobile/features/cart/presentation/screens/cart.dart';
@@ -45,7 +49,19 @@ class AppRouter {
   static const String about = '/about';
   static const String order = '/order';
   static const String orderDetails = '/order_details';
-  
+  static const String verifyEmail = '/verify_email';
+  static const String resetPassword = '/reset-password';
+
+  /// Build error page widget
+  /// Can be reused for different error scenarios
+  static Widget buildErrorPage({String? message}) {
+    return Scaffold(
+      body: Center(
+        child: Text(message ?? 'Page not found'),
+      ),
+    );
+  }
+
   // GoRouter configuration
   static final GoRouter router = GoRouter(
     initialLocation: home, // ✅ Screen default
@@ -92,7 +108,7 @@ class AppRouter {
       ),
       // Checkout route
       protectedRoute(
-        path: AppRouter.checkout,     
+        path: AppRouter.checkout,
         pathLogin: AppRouter.auth,
         providerFactory: () => [
           ChangeNotifierProvider<CheckoutProvider>(
@@ -115,7 +131,7 @@ class AppRouter {
       // Book details route
       GoRoute(
         path: '$bookDetails/:id',
-        name: 'book_details', 
+        name: 'book_details',
         builder: (context, state) {
           final bookId = state.pathParameters['id']!;
 
@@ -125,9 +141,9 @@ class AppRouter {
           );
         },
       ),
-            // Checkout route
+      // Checkout route
       protectedRoute(
-        path: AppRouter.profile,     
+        path: AppRouter.profile,
         pathLogin: AppRouter.auth,
         providerFactory: () => [
           ChangeNotifierProvider<ProfileProvider>(
@@ -138,7 +154,7 @@ class AppRouter {
       ),
       // Change password route
       protectedRoute(
-        path: AppRouter.changePassword,     
+        path: AppRouter.changePassword,
         pathLogin: AppRouter.auth,
         providerFactory: () => [
           ChangeNotifierProvider<ChangePasswordProvider>(
@@ -150,7 +166,7 @@ class AppRouter {
       // Book details route
       GoRoute(
         path: contact,
-        name: 'contact', 
+        name: 'contact',
         builder: (context, state) {
           return ChangeNotifierProvider<ContactProvider>(
             create: (_) => getIt<ContactProvider>(),
@@ -161,7 +177,7 @@ class AppRouter {
       // About route
       GoRoute(
         path: about,
-        name: 'about', 
+        name: 'about',
         builder: (context, state) {
           return ChangeNotifierProvider<AboutProvider>(
             create: (_) => getIt<AboutProvider>(),
@@ -171,7 +187,7 @@ class AppRouter {
       ),
       // Order route
       protectedRoute(
-        path: AppRouter.order,     
+        path: AppRouter.order,
         pathLogin: AppRouter.auth,
         providerFactory: () => [
           ChangeNotifierProvider<OrderProvider>(
@@ -195,15 +211,48 @@ class AppRouter {
         builder: (context, state) {
           final orderId = state.pathParameters['id']!;
 
-          return MainLayout(
-            child: OrderDetails(orderId: int.parse(orderId)),
+          return MainLayout(child: OrderDetails(orderId: int.parse(orderId)));
+        },
+      ),
+      // Verify email route
+      GoRoute(
+        path: AppRouter.verifyEmail,
+        name: 'verify_email',
+        builder: (context, state) {
+          return ChangeNotifierProvider<VerifyEmailProvider>(
+            create: (_) => getIt<VerifyEmailProvider>(),
+            child: MainLayout(child: const VerifyEmail()),
+          );
+        },
+      ),
+      // Reset password route using deeplink
+      GoRoute(
+        path: AppRouter.resetPassword,
+        name: 'reset_password',
+        builder: (context, state) {
+          // Get token and email from extra (passed by DeepLinkService) or query parameters (direct URL)
+          final Map<String, dynamic>? extra = state.extra as Map<String, dynamic>?;
+          final token = extra?['token'] as String? ?? state.uri.queryParameters['token'];
+          final email = extra?['email'] as String? ?? state.uri.queryParameters['email'];
+          
+          // If missing required parameters, use error page
+          if (token == null || email == null) {
+            return AppRouter.buildErrorPage(
+              message: 'Invalid reset password link',
+            );
+          }
+          
+          return ChangeNotifierProvider<ResetPasswordProvider>(
+            create: (_) => getIt<ResetPasswordProvider>(),
+            child: MainLayout(
+              child: ResetPassword(token: token, email: email),
+            ),
           );
         },
       ),
     ],
 
     // Error page
-    errorBuilder: (context, state) =>
-        Scaffold(body: Center(child: Text('Page not found'))),
+    errorBuilder: (context, state) => AppRouter.buildErrorPage(),
   );
 }

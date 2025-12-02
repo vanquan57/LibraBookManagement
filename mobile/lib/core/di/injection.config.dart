@@ -24,12 +24,18 @@ import '../../features/auth/domain/usecases/post_logout.dart' as _i787;
 import '../../features/auth/domain/usecases/post_register.dart' as _i166;
 import '../../features/auth/domain/usecases/post_register_google.dart'
     as _i1046;
+import '../../features/auth/domain/usecases/post_reset_password.dart' as _i532;
+import '../../features/auth/domain/usecases/post_verify_email.dart' as _i589;
 import '../../features/auth/domain/usecases/update_password.dart' as _i455;
 import '../../features/auth/presentation/provider/change_password_provider.dart'
     as _i872;
 import '../../features/auth/presentation/provider/login_provider.dart' as _i987;
 import '../../features/auth/presentation/provider/register_provider.dart'
     as _i1046;
+import '../../features/auth/presentation/provider/reset_password_provider.dart'
+    as _i956;
+import '../../features/auth/presentation/provider/verify_email_provider.dart'
+    as _i1067;
 import '../../features/book_details/data/datasources/book/book_remote_datasource.dart'
     as _i432;
 import '../../features/book_details/data/datasources/feedback/feedback_remote_datasource.dart'
@@ -280,10 +286,14 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i546.CategoryRemoteDataSource(gh<_i361.Dio>()));
     gh.lazySingleton<_i692.PublisherRemoteDataSource>(
         () => _i692.PublisherRemoteDataSource(gh<_i361.Dio>()));
-    gh.lazySingleton<_i706.WishlistRemoteDataSource>(
-        () => _i706.WishlistRemoteDataSource(gh<_i361.Dio>()));
-    gh.lazySingleton<_i490.CheckLoginDatasource>(
-        () => _i490.CheckLoginDatasource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i163.DistrictRemoteDataSource>(
+        () => _i163.DistrictRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i1023.OrderRemoteDataSource>(
+        () => _i1023.OrderRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i389.ProvinceRemoteDataSource>(
+        () => _i389.ProvinceRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i939.WardRemoteDataSource>(
+        () => _i939.WardRemoteDataSource(gh<_i361.Dio>()));
     gh.lazySingleton<_i459.DistrictRemoteDataSource>(
         () => _i459.DistrictRemoteDataSource(gh<_i361.Dio>()));
     gh.lazySingleton<_i13.ProfileRemoteDataSource>(
@@ -292,14 +302,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i676.ProvinceRemoteDataSource(gh<_i361.Dio>()));
     gh.lazySingleton<_i132.WardRemoteDataSource>(
         () => _i132.WardRemoteDataSource(gh<_i361.Dio>()));
-    gh.lazySingleton<_i163.DistrictRemoteDataSource>(
-        () => _i163.DistrictRemoteDataSource(gh<_i361.Dio>()));
-    gh.lazySingleton<_i389.ProvinceRemoteDataSource>(
-        () => _i389.ProvinceRemoteDataSource(gh<_i361.Dio>()));
-    gh.lazySingleton<_i939.WardRemoteDataSource>(
-        () => _i939.WardRemoteDataSource(gh<_i361.Dio>()));
-    gh.lazySingleton<_i1023.OrderRemoteDataSource>(
-        () => _i1023.OrderRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i706.WishlistRemoteDataSource>(
+        () => _i706.WishlistRemoteDataSource(gh<_i361.Dio>()));
+    gh.lazySingleton<_i490.CheckLoginDatasource>(
+        () => _i490.CheckLoginDatasource(gh<_i361.Dio>()));
     gh.factory<_i1049.CheckLoginProvider>(() => _i1049.CheckLoginProvider(
         checkLoginDatasource: gh<_i490.CheckLoginDatasource>()));
     gh.lazySingleton<_i270.CategoryRepository>(() =>
@@ -397,14 +403,18 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i892.PostLoginUseCase(gh<_i787.AuthRepository>()));
     gh.lazySingleton<_i332.PostLoginGoogleUseCase>(
         () => _i332.PostLoginGoogleUseCase(gh<_i787.AuthRepository>()));
+    gh.lazySingleton<_i787.PostLogoutUseCase>(
+        () => _i787.PostLogoutUseCase(gh<_i787.AuthRepository>()));
     gh.lazySingleton<_i166.PostRegisterUseCase>(
         () => _i166.PostRegisterUseCase(gh<_i787.AuthRepository>()));
     gh.lazySingleton<_i1046.PostRegisterGoogleUseCase>(
         () => _i1046.PostRegisterGoogleUseCase(gh<_i787.AuthRepository>()));
+    gh.lazySingleton<_i532.PostResetPasswordUseCase>(
+        () => _i532.PostResetPasswordUseCase(gh<_i787.AuthRepository>()));
+    gh.lazySingleton<_i589.PostVerifyEmailUseCase>(
+        () => _i589.PostVerifyEmailUseCase(gh<_i787.AuthRepository>()));
     gh.lazySingleton<_i455.UpdatePasswordUseCase>(
         () => _i455.UpdatePasswordUseCase(gh<_i787.AuthRepository>()));
-    gh.lazySingleton<_i787.PostLogoutUseCase>(
-        () => _i787.PostLogoutUseCase(gh<_i787.AuthRepository>()));
     gh.lazySingleton<_i584.AddCartUseCase>(
         () => _i584.AddCartUseCase(gh<_i322.CartRepository>()));
     gh.lazySingleton<_i787.DeleteCartUseCase>(
@@ -442,9 +452,11 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i176.UpdateBookOrderUseCase>(),
         ));
     gh.factory<_i235.HeaderProvider>(() => _i235.HeaderProvider(
-      postLogoutUseCase: gh<_i787.PostLogoutUseCase>(),
-      localStorageService: gh<_i744.LocalStorageService>(),
-    ));
+          postLogoutUseCase: gh<_i787.PostLogoutUseCase>(),
+          localStorageService: gh<_i744.LocalStorageService>(),
+        ));
+    gh.factory<_i1067.VerifyEmailProvider>(() => _i1067.VerifyEmailProvider(
+        postVerifyEmailUseCase: gh<_i589.PostVerifyEmailUseCase>()));
     gh.factory<_i639.ListBookProvider>(() => _i639.ListBookProvider(
           getBooksUseCase: gh<_i941.GetBooksUseCase>(),
           getListCategoriesUseCase: gh<_i809.GetListCategoriesUseCase>(),
@@ -468,6 +480,8 @@ extension GetItInjectableX on _i174.GetIt {
           getFeedbacksUseCase: gh<_i593.GetFeedbacksUseCase>(),
           createFeedbackUseCase: gh<_i274.CreateFeedbackUseCase>(),
         ));
+    gh.factory<_i956.ResetPasswordProvider>(() => _i956.ResetPasswordProvider(
+        resetPasswordUseCase: gh<_i532.PostResetPasswordUseCase>()));
     gh.factory<_i279.OrderProvider>(
         () => _i279.OrderProvider(gh<_i180.GetOrderUseCase>()));
     gh.factory<_i990.ProfileProvider>(() => _i990.ProfileProvider(

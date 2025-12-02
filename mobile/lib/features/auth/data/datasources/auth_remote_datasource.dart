@@ -206,4 +206,72 @@ class AuthRemoteDataSource {
       );
     }
   }
+
+  /// Verify email
+  ///
+  /// @param String email
+  ///
+  /// @return Future<ApiResponse<String>>
+  Future<ApiResponse<String>> verifyEmail(String email) async {
+    try {
+      final response = await _dio.post('/auth/verify-email', data: {'email': email});
+      
+      return ApiResponse.fromJson(
+        response.data,
+        (json) => json['message'] as String,
+      );
+    } on DioException catch (e) {
+      log.e('Logout failed: ${getErrorMessage(e)}');
+
+      return ApiResponse.failure(getErrorMessage(e));
+    } catch (e) {
+      log.e('Logout failed: $e');
+
+      return ApiResponse.failure(
+        'Đã có lỗi không mong muốn xảy ra. Vui lòng thử lại sau.',
+      );
+    }
+  }
+
+  /// Reset password
+  ///
+  /// @param String token
+  /// @param String email
+  /// @param String password
+  /// @param String confirmPassword
+  ///
+  /// @return Future<ApiResponse<String>>
+  Future<ApiResponse<String>> resetPassword(
+    String token,
+    String email,
+    String password,
+    String confirmPassword,
+  ) async {
+    try {
+      final response = await _dio.post(
+        '/auth/reset-password',
+        data: {
+          'token': token,
+          'email': email,
+          'password': password,
+          'confirm_password': confirmPassword,
+        },
+      );
+
+      return ApiResponse.fromJson(
+        response.data,
+        (json) => json['message'] as String,
+      );
+    } on DioException catch (e) {
+      log.e('Logout failed: ${getErrorMessage(e)}');
+
+      return ApiResponse.failure(getErrorMessage(e));
+    } catch (e) {
+      log.e('Logout failed: $e');
+
+      return ApiResponse.failure(
+        'Đã có lỗi không mong muốn xảy ra. Vui lòng thử lại sau.',
+      );
+    }
+  }
 }
