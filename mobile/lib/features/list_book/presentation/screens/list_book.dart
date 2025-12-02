@@ -590,7 +590,6 @@ class _ListBookScreenState extends State<ListBookScreen> {
                     feedbacksCount: book.feedbacksCount ?? 0,
                     baseImageUrl: AppConstants.BASE_URL_IMAGE,
                     isInWishlist: wishlistProvider.isInWishList(book.id),
-                    onQuickView: () => print('Quick view book ${book.id}'),
                     onAddToCart: () async {
                       if (await ensureLogin(context)) {
                         cartProvider.addToCart([
