@@ -139,7 +139,9 @@ class _LoginFormState extends State<LoginForm> {
               Align(
                 alignment: Alignment.centerRight,
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context.push(AppRouter.verifyEmail);
+                  },
                   child: Text(
                     'Quên mật khẩu?',
                     style: TextStyle(fontSize: 12.sp),

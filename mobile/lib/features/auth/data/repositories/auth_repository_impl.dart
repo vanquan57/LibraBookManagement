@@ -72,4 +72,27 @@ class AuthRepositoryImpl implements AuthRepository {
   Future<ApiResponse<String>> logout() async {
     return await remoteDataSource.logout();
   }
+
+  /// Verify email
+  ///
+  /// @param String email
+  ///
+  /// @return Future<ApiResponse<String>>
+  @override
+  Future<ApiResponse<String>> verifyEmail(String email) async {
+    return await remoteDataSource.verifyEmail(email);
+  }
+
+  /// Reset password
+  ///
+  /// @param String token
+  /// @param String email
+  /// @param String password
+  /// @param String confirmPassword
+  ///
+  /// @return Future<ApiResponse<String>>
+  @override
+  Future<ApiResponse<String>> resetPassword(String token, String email, String password, String confirmPassword) async {
+    return await remoteDataSource.resetPassword(token, email, password, confirmPassword);
+  }
 }

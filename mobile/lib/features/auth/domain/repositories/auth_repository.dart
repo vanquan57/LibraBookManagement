@@ -59,4 +59,21 @@ abstract class AuthRepository {
   ///
   /// @return Future<ApiResponse<String>>
   Future<ApiResponse<String>> logout();
+
+  /// Verify email
+  ///
+  /// @param String email
+  ///
+  /// @return Future<ApiResponse<String>>
+  Future<ApiResponse<String>> verifyEmail(String email);
+
+  /// Reset password
+  ///
+  /// @param String token
+  /// @param String email
+  /// @param String password
+  /// @param String confirmPassword
+  ///
+  /// @return Future<ApiResponse<String>>
+  Future<ApiResponse<String>> resetPassword(String token, String email, String password, String confirmPassword);
 }
