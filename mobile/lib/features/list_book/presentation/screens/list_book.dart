@@ -14,7 +14,14 @@ import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ListBookScreen extends StatefulWidget {
-  const ListBookScreen({super.key});
+  final String? filter;
+  final int? categoryId;
+
+  const ListBookScreen({
+    super.key,
+    this.filter,
+    this.categoryId,
+  });
 
   @override
   State<ListBookScreen> createState() => _ListBookScreenState();
@@ -36,6 +43,12 @@ class _ListBookScreenState extends State<ListBookScreen> {
   void initState() {
     super.initState();
     // Load initial data
+    if (widget.filter != null) {
+      _activeFilter = widget.filter!;
+    }
+    if (widget.categoryId != null) {
+      _selectedCategory = widget.categoryId!;
+    }
     Future.microtask(() {
       _loadInitialData();
       _refreshWishlist();

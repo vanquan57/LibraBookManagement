@@ -130,7 +130,7 @@ class _HeaderState extends State<Header> {
                       padding: EdgeInsets.symmetric(horizontal: 5),
                       child: Row(
                         children: [
-                          if (currentLocation == AppRouter.listBook)
+                          if (currentLocation.contains(AppRouter.listBook))
                             IconButton(
                               onPressed: () => _handleMenuClick(context, currentLocation),
                               icon: const Icon(Icons.menu),

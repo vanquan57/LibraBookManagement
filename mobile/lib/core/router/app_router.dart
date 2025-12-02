@@ -125,9 +125,17 @@ class AppRouter {
         path: listBook,
         name: 'list_book',
         builder: (context, state) {
+          final filterParam = state.uri.queryParameters['filter'];
+          final categoryIdParam = state.uri.queryParameters['categoryId'];
+
           return ChangeNotifierProvider<ListBookProvider>(
             create: (_) => getIt<ListBookProvider>(),
-            child: const ListBookScreen(),
+            child: ListBookScreen(
+              filter: filterParam,
+              categoryId: categoryIdParam != null
+                  ? int.parse(categoryIdParam)
+                  : null,
+            ),
           );
         },
       ),
