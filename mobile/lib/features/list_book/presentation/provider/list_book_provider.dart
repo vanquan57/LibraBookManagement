@@ -166,6 +166,7 @@ class ListBookProvider extends ChangeNotifier {
     int? mostBorrowed,
     int? mostViewed,
     int? mostLoved,
+    int? limit = AppConstants.LIMIT_BOOK,
   }) async {
     if (_isLoadingBooks) return;
     _isLoadingBooks = true;
@@ -173,7 +174,7 @@ class ListBookProvider extends ChangeNotifier {
 
     final params = BookParams(
       page: page,
-      limit: AppConstants.LIMIT_BOOK,
+      limit: limit,
       name: searchQuery,
       categoryId: categoryId,
       authorIds: authorIds,

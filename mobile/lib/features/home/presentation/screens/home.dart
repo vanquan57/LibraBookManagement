@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mobile/core/config/constant.dart';
 import 'package:mobile/core/helper/calculate_card_width.dart';
+import 'package:mobile/core/router/app_router.dart';
 import 'package:mobile/features/cart/presentation/provider/cart_provider.dart';
 import 'package:mobile/features/home/presentation/provider/home_provider.dart';
 import 'package:mobile/features/home/presentation/screens/carousel.dart';
@@ -306,7 +308,7 @@ class _HomePageState extends State<HomePage> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  print('See all top borrowed books');
+                  context.push('${AppRouter.listBook}?filter=most-borrowed');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFDB4444),
@@ -380,7 +382,7 @@ class _HomePageState extends State<HomePage> {
                       categoryId: category.id,
                       name: category.name,
                       onTap: () =>
-                          print('Navigate to category detail ${category.id}'),
+                          context.push('${AppRouter.listBook}?categoryId=${category.id}'),
                     ),
                   );
                 },
@@ -474,7 +476,7 @@ class _HomePageState extends State<HomePage> {
             Center(
               child: ElevatedButton(
                 onPressed: () {
-                  print('See all top borrowed books');
+                  context.push('${AppRouter.listBook}?filter=most-viewed');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFDB4444),
