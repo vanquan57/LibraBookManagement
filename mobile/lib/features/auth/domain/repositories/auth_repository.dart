@@ -1,4 +1,5 @@
 import 'package:mobile/core/response/api_response.dart';
+import 'package:mobile/features/auth/domain/usecases/get_verify_register_email.dart';
 
 import '../../data/models/token_data.dart';
 
@@ -76,4 +77,11 @@ abstract class AuthRepository {
   ///
   /// @return Future<ApiResponse<String>>
   Future<ApiResponse<String>> resetPassword(String token, String email, String password, String confirmPassword);
+
+  /// Verify email register
+  ///
+  /// @param VerifyRegisterEmailParams params
+  ///
+  /// @return Future<ApiResponse<String>>
+  Future<ApiResponse<String>> verifyEmailRegister(VerifyRegisterEmailParams params);
 }

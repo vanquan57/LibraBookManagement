@@ -18,6 +18,8 @@ import '../../features/auth/data/datasources/auth_remote_datasource.dart'
 import '../../features/auth/data/repositories/auth_repository_impl.dart'
     as _i153;
 import '../../features/auth/domain/repositories/auth_repository.dart' as _i787;
+import '../../features/auth/domain/usecases/get_verify_register_email.dart'
+    as _i453;
 import '../../features/auth/domain/usecases/post_login.dart' as _i892;
 import '../../features/auth/domain/usecases/post_login_google.dart' as _i332;
 import '../../features/auth/domain/usecases/post_logout.dart' as _i787;
@@ -36,6 +38,8 @@ import '../../features/auth/presentation/provider/reset_password_provider.dart'
     as _i956;
 import '../../features/auth/presentation/provider/verify_email_provider.dart'
     as _i1067;
+import '../../features/auth/presentation/provider/verify_email_register_provider.dart'
+    as _i45;
 import '../../features/book_details/data/datasources/book/book_remote_datasource.dart'
     as _i432;
 import '../../features/book_details/data/datasources/feedback/feedback_remote_datasource.dart'
@@ -415,6 +419,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i589.PostVerifyEmailUseCase(gh<_i787.AuthRepository>()));
     gh.lazySingleton<_i455.UpdatePasswordUseCase>(
         () => _i455.UpdatePasswordUseCase(gh<_i787.AuthRepository>()));
+    gh.lazySingleton<_i453.GetVerifyRegisterEmailUseCase>(
+        () => _i453.GetVerifyRegisterEmailUseCase(gh<_i787.AuthRepository>()));
     gh.lazySingleton<_i584.AddCartUseCase>(
         () => _i584.AddCartUseCase(gh<_i322.CartRepository>()));
     gh.lazySingleton<_i787.DeleteCartUseCase>(
@@ -482,6 +488,10 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i956.ResetPasswordProvider>(() => _i956.ResetPasswordProvider(
         resetPasswordUseCase: gh<_i532.PostResetPasswordUseCase>()));
+    gh.factory<_i45.VerifyEmailRegisterProvider>(() =>
+        _i45.VerifyEmailRegisterProvider(
+            getVerifyRegisterEmailUseCase:
+                gh<_i453.GetVerifyRegisterEmailUseCase>()));
     gh.factory<_i279.OrderProvider>(
         () => _i279.OrderProvider(gh<_i180.GetOrderUseCase>()));
     gh.factory<_i990.ProfileProvider>(() => _i990.ProfileProvider(

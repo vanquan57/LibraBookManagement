@@ -1,6 +1,7 @@
 // lib/features/auth/data/repositories/auth_repository_impl.dart
 import 'package:injectable/injectable.dart';
 import 'package:mobile/core/response/api_response.dart';
+import 'package:mobile/features/auth/domain/usecases/get_verify_register_email.dart';
 
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/auth_remote_datasource.dart';
@@ -94,5 +95,15 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<ApiResponse<String>> resetPassword(String token, String email, String password, String confirmPassword) async {
     return await remoteDataSource.resetPassword(token, email, password, confirmPassword);
+  }
+
+  /// Verify email register
+  ///
+  /// @param VerifyRegisterEmailParams params
+  ///
+  /// @return Future<ApiResponse<String>>
+  @override
+  Future<ApiResponse<String>> verifyEmailRegister(VerifyRegisterEmailParams params) async {
+    return await remoteDataSource.verifyEmailRegister(params);
   }
 }

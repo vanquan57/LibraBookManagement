@@ -27,52 +27,54 @@ class DeepLinkService {
   }
 
   void _handleDeepLink(Uri uri, GoRouter router) {
-    print('Deep link received: ${uri.toString()}');
-    print('URI path: ${uri.path}');
-    print('URI query parameters: ${uri.queryParameters}');
-    
     // Normalize path by removing trailing slash for comparison
-    final normalizedPath = uri.path.endsWith('/') 
+    final normalizedPath = uri.path.endsWith('/')
         ? uri.path.substring(0, uri.path.length - 1)
         : uri.path;
-    
+    // handle url with slice to segments
+    final segments = uri.pathSegments;
+
     // Handle reset password deeplink
-    if (normalizedPath == '/auth/password/reset' || 
+    if (normalizedPath == '/auth/password/reset' ||
         normalizedPath.startsWith('/auth/password/reset/')) {
       final token = uri.queryParameters['token'];
       final email = uri.queryParameters['email'];
 
-      print('Token: $token');
-      print('Email: $email');
-
       if (token != null && email != null) {
         // Decode email if it's still encoded
         final decodedEmail = Uri.decodeComponent(email);
-        
+
         // Build URL with query parameters for go()
         final resetPasswordUrl = Uri(
           path: AppRouter.resetPassword,
-          queryParameters: {
-            'token': token,
-            'email': decodedEmail,
-          },
+          queryParameters: {'token': token, 'email': decodedEmail},
         ).toString();
-        
-        print('Navigating to: $resetPasswordUrl');
-        
-        // Use go() to navigate to reset password screen
-        // Route will read from query parameters
+
         router.go(resetPasswordUrl);
-      } else {
-        print('Missing token or email in reset password link');
-        print('Token is null: ${token == null}');
-        print('Email is null: ${email == null}');
       }
     } else {
       print('Deep link path does not match reset password pattern');
     }
-    
-    // TODO: Add other deep links here
+    // Handle verify register email deeplink
+    if (segments.length >= 5 &&
+        segments[0] == 'auth' &&
+        segments[1] == 'email' &&
+        segments[2] == 'verify') {
+      final id = segments[3];
+      final hash = segments[4];
+      final expires = uri.queryParameters['expires'];
+      final signature = uri.queryParameters['signature'];
+      final email = uri.queryParameters['email'];
+
+      // Navigate to verify email register screen
+      router.go(AppRouter.verifyEmailRegister, extra: {
+        'id': id,
+        'hash': hash,
+        'expires': expires,
+        'signature': signature,
+        'email': email,
+      });
+    }
   }
 
   void dispose() {
