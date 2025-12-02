@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:mobile/core/helper/error_parser.dart';
 import 'package:mobile/core/logger/logger.dart';
+import 'package:mobile/features/auth/domain/usecases/get_verify_register_email.dart';
 import '../../../../core/response/api_response.dart';
 import '../models/token_data.dart';
 import 'package:injectable/injectable.dart';
@@ -274,4 +275,41 @@ class AuthRemoteDataSource {
       );
     }
   }
+
+  /// Verify email register
+  ///
+  /// @param VerifyRegisterEmailParams params
+  ///
+  /// @return Future<ApiResponse<String>>
+  Future<ApiResponse<String>> verifyEmailRegister(
+    VerifyRegisterEmailParams params,
+  ) async {
+    try {
+      final response = await _dio.get(
+        '/auth/email/verify/${params.id}/${params.hash}',
+        queryParameters: {
+          'expires': params.expires,
+          'signature': params.signature,
+        },
+      );
+
+      return ApiResponse.fromJson(
+        response.data,
+        (json) => json['message'] as String,
+      );
+    } on DioException catch (e) {
+      log.e('Verify email register failed: ${getErrorMessage(e)}');
+
+      return ApiResponse.failure(getErrorMessage(e));
+    } catch (e) {
+      log.e('Verify email register failed: $e');
+
+      return ApiResponse.failure(
+        'Đã có lỗi không mong muốn xảy ra. Vui lòng thử lại sau.',
+      );
+    }
+  }
+
+
+
 }

@@ -1,6 +1,8 @@
 // lib/features/auth/presentation/screens/login_form.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mobile/core/router/app_router.dart';
 import 'package:mobile/core/utils/validators.dart';
 import 'package:mobile/share/components/styled_dialog.dart';
 import 'package:mobile/features/auth/presentation/provider/register_provider.dart';
@@ -231,7 +233,7 @@ class _RegisterFormState extends State<RegisterForm> {
             child: ElevatedButton(
               onPressed: () async {
                 // show dialog to enter student code
-                await _handleRegisterGoogle();
+                await _handleRegisterGoogle(registerProvider);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.white,
@@ -288,7 +290,7 @@ class _RegisterFormState extends State<RegisterForm> {
     );
   }
 
-  Future<void> _handleRegisterGoogle() async {
+  Future<void> _handleRegisterGoogle(RegisterProvider provider) async {
     final result = await showDialog<String>(
       context: context,
       barrierDismissible: false,
@@ -300,7 +302,6 @@ class _RegisterFormState extends State<RegisterForm> {
     if (result != null && result.isNotEmpty) {
       if (!mounted) return;
 
-      final provider = context.read<RegisterProvider>();
       await provider.registerGoogle(result);
 
       if (provider.isShowDialog && provider.errorMessageRegisterGoogle != null) {
@@ -316,6 +317,8 @@ class _RegisterFormState extends State<RegisterForm> {
             ),
           );
         }
+      } else {
+          context.go(AppRouter.home);
       }
     }
   }

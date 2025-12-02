@@ -6,9 +6,11 @@ import 'package:mobile/core/helper/protected_route.dart';
 import 'package:mobile/features/auth/presentation/provider/change_password_provider.dart';
 import 'package:mobile/features/auth/presentation/provider/reset_password_provider.dart';
 import 'package:mobile/features/auth/presentation/provider/verify_email_provider.dart';
+import 'package:mobile/features/auth/presentation/provider/verify_email_register_provider.dart';
 import 'package:mobile/features/auth/presentation/screens/change_password.dart';
 import 'package:mobile/features/auth/presentation/screens/reset_password.dart';
 import 'package:mobile/features/auth/presentation/screens/verify_email.dart';
+import 'package:mobile/features/auth/presentation/screens/verify_email_register.dart';
 import 'package:mobile/features/book_details/presentation/provider/book_details_provider.dart';
 import 'package:mobile/features/book_details/presentation/screens/book_details.dart';
 import 'package:mobile/features/cart/presentation/screens/cart.dart';
@@ -51,6 +53,7 @@ class AppRouter {
   static const String orderDetails = '/order_details';
   static const String verifyEmail = '/verify_email';
   static const String resetPassword = '/reset-password';
+  static const String verifyEmailRegister = '/verify-email-register';
 
   /// Build error page widget
   /// Can be reused for different error scenarios
@@ -246,6 +249,33 @@ class AppRouter {
             create: (_) => getIt<ResetPasswordProvider>(),
             child: MainLayout(
               child: ResetPassword(token: token, email: email),
+            ),
+          );
+        },
+      ),
+      // Verify email register route using deeplink
+      GoRoute(
+        path: AppRouter.verifyEmailRegister,
+        name: 'verify_email_register',
+        builder: (context, state) {
+          // Get token and email from extra (passed by DeepLinkService) or query parameters (direct URL)
+          final Map<String, dynamic>? extra = state.extra as Map<String, dynamic>?;
+          final id = extra?['id'] as String? ?? state.uri.queryParameters['id'];
+          final hash = extra?['hash'] as String? ?? state.uri.queryParameters['hash'];
+          final expires = extra?['expires'] as String? ?? state.uri.queryParameters['expires'];
+          final signature = extra?['signature'] as String? ?? state.uri.queryParameters['signature'];
+
+          // If missing required parameters, use error page
+          if (id == null || hash == null || expires == null || signature == null) {
+            return AppRouter.buildErrorPage(
+              message: 'Invalid verify email register link',
+            );
+          }
+          
+          return ChangeNotifierProvider<VerifyEmailRegisterProvider>(
+            create: (_) => getIt<VerifyEmailRegisterProvider>(),
+            child: MainLayout(
+              child: VerifyEmailRegister(id: id, hash: hash, expires: expires, signature: signature),
             ),
           );
         },
