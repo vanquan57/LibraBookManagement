@@ -177,6 +177,7 @@ class OrderDetailsItem extends StatelessWidget {
               border: Border.all(color: Colors.grey[300]!),
               borderRadius: BorderRadius.circular(4.r),
             ),
+            // display one line if long text display ...
             child: DropdownButtonHideUnderline(
               child: DropdownButton<int>(
                 value: currentStatus,
@@ -191,6 +192,8 @@ class OrderDetailsItem extends StatelessWidget {
                     enabled: !_isStatusDisabled(entry.key, currentStatus),
                     child: Text(
                       entry.value,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         color: _isStatusDisabled(entry.key, currentStatus)
                             ? Colors.grey
